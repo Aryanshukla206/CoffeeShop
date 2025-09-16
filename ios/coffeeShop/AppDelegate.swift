@@ -31,6 +31,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     return true
   }
+
+  // Handle URL schemes for Google Sign-In redirect on iOS 13-
+  func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+    // React Native/GSI uses URL schemes to route back to the app
+    // Return true if your app handled the URL.
+    // No explicit SDK hook is required for @react-native-google-signin/google-signin
+    // See: https://github.com/react-native-google-signin/google-signin
+    return true
+  }
 }
 
 class ReactNativeDelegate: RCTDefaultReactNativeFactoryDelegate {

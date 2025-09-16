@@ -2,13 +2,27 @@ import React from 'react';
 import {StyleSheet, Image, View} from 'react-native';
 import {COLORS, SPACING} from '../theme/theme';
 
-const ProfilePic = () => {
+
+
+const ProfilePic = (picture : any) => {
+  const obj = picture ;
+  const url = obj.picture;
+
+
   return (
-    <View style={styles.ImageContainer}>
-      <Image
-        source={require('../assets/app_images/aryanDP.jpg')}
-        style={styles.Image}
-      />
+    <View > 
+      {url ? (
+        <Image
+          source={{ uri: url }}
+          style={styles.Image}
+        />
+      ) : (
+        <Image
+          source={require('../assets/app_images/aryanDP.jpg')} // fallback
+          style={styles.Image}
+        />
+      )}
+      
     </View>
   );
 };

@@ -81,7 +81,7 @@ android {
 
     namespace "com.coffeeshop"
     defaultConfig {
-        applicationId "com.coffeeshop"
+        applicationId "com.coffeeShop"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

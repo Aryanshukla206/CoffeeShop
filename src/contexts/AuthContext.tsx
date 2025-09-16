@@ -17,7 +17,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: React.ReactNode; webClientId: string }> = ({ children, webClientId }) => {
   const [user, setUser] = useState<User>(null);
   const [initializing, setInitializing] = useState(true);
-
+  console.log(user, "----------_>")
   useEffect(() => {
     configureGoogleSignIn(webClientId);
     const subscriber = auth().onAuthStateChanged(u => {
@@ -29,13 +29,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode; webClientId: st
 
   const signInWithGoogle = async () => {
   try {
-    console.log('hasPlayServices...');
     await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+    // here is the problem
 
-    console.log('starting signIn...');
     const userInfo = await GoogleSignin.signIn();
     console.log('signup result:', userInfo);
-    const idToken = (userInfo as any).idToken;
+    const idToken = (userInfo.data as any).idToken;
     console.log('idToken:', idToken);
     if (!idToken) throw new Error('Missing idToken');
 

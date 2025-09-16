@@ -23,6 +23,7 @@ import CustomIcon from '../components/CustomIcon';
 import {FlatList} from 'react-native';
 import CoffeeCard from '../components/CoffeeCard';
 import {Dimensions} from 'react-native';
+import { useAuth } from '../contexts/AuthContext';
 
 const getCategoriesFromData = (data: any) => {
   let temp: any = {};
@@ -120,7 +121,7 @@ const HomeScreen = ({navigation}: any) => {
       ToastAndroid.CENTER,
     );
   };
-
+  const {user} = useAuth();
   return (
     <View style={styles.ScreenContainer}>
       <StatusBar backgroundColor={COLORS.primaryBlackHex} />
@@ -128,7 +129,7 @@ const HomeScreen = ({navigation}: any) => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.ScrollViewFlex}>
         {/* App Header */}
-        <HeaderBar title='Welcome Aryan' />
+        <HeaderBar title={user?.displayName} picture={user?.providerData[0].photoURL} />
 
         <Text style={styles.ScreenTitle}>
           Find the best{'\n'}coffee for you

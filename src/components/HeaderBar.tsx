@@ -5,10 +5,12 @@ import GradientBGIcon from './GradientBGIcon';
 import ProfilePic from './ProfilePic';
 
 interface HeaderBarProps {
-  title?: string;
+  title?: any;
+  picture?: string;
 }
 
-const HeaderBar: React.FC<HeaderBarProps> = ({title}) => {
+const HeaderBar: React.FC<HeaderBarProps> = ({title , picture}) => {
+  console.log(title)
   return (
     <View style={styles.HeaderContainer}>
       <GradientBGIcon
@@ -16,8 +18,11 @@ const HeaderBar: React.FC<HeaderBarProps> = ({title}) => {
         color={COLORS.primaryLightGreyHex}
         size={FONTSIZE.size_16}
       />
-      <Text style={styles.HeaderText}>{title}</Text>
-      <ProfilePic />
+     <Text style={styles.HeaderText}>
+      {title?.trim() || "Welcome User"}
+      </Text>
+      
+      <ProfilePic picture={picture} />
     </View>
   );
 };

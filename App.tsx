@@ -6,7 +6,7 @@ import TabNavigator from './src/navigators/TabNavigator'
 import { AuthProvider } from './src/contexts/AuthContext';
 const stack = createNativeStackNavigator();
 const App = () => {
-  const WEB_CLIENT_ID = '614978611115-9kj2ps5m0d7lnqqi0soab3fgc37f3uoi.apps.googleusercontent.com'
+  const WEB_CLIENT_ID = "965192633882-n9gue9isqj1g4mq00tosr3n3d7t0h63e.apps.googleusercontent.com"
 
   return (
     <AuthProvider webClientId={WEB_CLIENT_ID}>

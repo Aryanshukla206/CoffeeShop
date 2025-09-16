@@ -5,8 +5,7 @@ import { COLORS } from '../theme/theme';
 
 const ProfileScreen: React.FC = () => {
   const { user, initializing, signInWithGoogle, signOut } = useAuth();
-  
-  // console.log(user, "-----------> ")
+
   if (initializing) {
     return (
       <View style={styles.center}>

@@ -2022,6 +2022,11 @@
   dependencies:
     plist "^3.1.0"
 
+"@react-native-firebase/messaging@^23.3.1":
+  version "23.3.1"
+  resolved "https://registry.npmjs.org/@react-native-firebase/messaging/-/messaging-23.3.1.tgz"
+  integrity sha512-cUFnAGT/+MYgDj9mxnRQOIiYZF0mA+qprzfa6EXpD66N3Dgetfn3VI2kIlEi24evtbFH3EnKI/u372qhVHzJIw==
+
 "@react-native-google-signin/google-signin@^16.0.0":
   version "16.0.0"
   resolved "https://registry.npmjs.org/@react-native-google-signin/google-signin/-/google-signin-16.0.0.tgz"

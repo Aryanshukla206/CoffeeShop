@@ -14,8 +14,10 @@ import HeaderBar from '../components/HeaderBar';
 import EmptyListAnimation from '../components/EmptyListAnimation';
 import PaymentFooter from '../components/PaymentFooter';
 import CartItem from '../components/CartItem';
+import { useAuth } from '../contexts/AuthContext';
 
 const CartScreen = ({navigation, route}: any) => {
+  const {user} = useAuth();
   const CartList = useStore((state: any) => state.CartList);
   const CartPrice = useStore((state: any) => state.CartPrice);
   const incrementCartItemQuantity = useStore(
@@ -50,7 +52,7 @@ const CartScreen = ({navigation, route}: any) => {
         <View
           style={[styles.ScrollViewInnerView, {marginBottom: tabBarHeight}]}>
           <View style={styles.ItemContainer}>
-            <HeaderBar title="Cart" />
+            <HeaderBar title="Cart" picture={user?.providerData[0].photoURL}/>
 
             {CartList.length == 0 ? (
               <EmptyListAnimation title={'Cart is Empty'} />

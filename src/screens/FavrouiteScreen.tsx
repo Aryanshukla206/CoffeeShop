@@ -13,8 +13,10 @@ import {COLORS, SPACING} from '../theme/theme';
 import HeaderBar from '../components/HeaderBar';
 import EmptyListAnimation from '../components/EmptyListAnimation';
 import FavoritesItemCard from '../components/FavoritesItemCard';
+import { useAuth } from '../contexts/AuthContext';
 
 const FavoritesScreen = ({navigation}: any) => {
+  const {user}= useAuth();
   const FavoritesList = useStore((state: any) => state.FavoritesList);
   const tabBarHeight = useBottomTabBarHeight();
   const addToFavoriteList = useStore((state: any) => state.addToFavoriteList);
@@ -34,7 +36,7 @@ const FavoritesScreen = ({navigation}: any) => {
         <View
           style={[styles.ScrollViewInnerView, {marginBottom: tabBarHeight}]}>
           <View style={styles.ItemContainer}>
-            <HeaderBar title="Favourites" />
+            <HeaderBar title="Favourites"   picture={user?.providerData[0].photoURL}/>
 
             {FavoritesList.length == 0 ? (
               <EmptyListAnimation title={'No Favourites'} />

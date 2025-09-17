@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, ActivityIndicator, Alert, StatusBar } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, ActivityIndicator, Alert, StatusBar, Button } from 'react-native';
 import { useAuth } from '../contexts/AuthContext';
 import { COLORS } from '../theme/theme';
+
 
 const ProfileScreen: React.FC = () => {
   const { user, initializing, signInWithGoogle, signOut } = useAuth();
@@ -38,6 +39,13 @@ const ProfileScreen: React.FC = () => {
           <Image source={{ uri: user.photoURL ?? undefined }} style={styles.avatar} />
           <Text style={styles.name}>{user.displayName}</Text>
           <Text style={styles.email}>{user.email}</Text>
+          <TouchableOpacity style={styles.button} onPress={()=>{
+            
+
+          }} >
+             <Text style={styles.buttonText}>Register Complaint</Text>
+
+          </TouchableOpacity>
 
           <TouchableOpacity style={styles.button} onPress={onSignOut}>
             <Text style={styles.buttonText}>Logout</Text>
@@ -66,6 +74,7 @@ const styles = StyleSheet.create({
   name: { fontSize: 18, fontWeight: '600',  },
   email: { color: 'white', marginBottom: 20 },
   button: {
+    marginTop : 10,
     backgroundColor: '#4285F4',
     paddingHorizontal: 20,
     paddingVertical: 10,

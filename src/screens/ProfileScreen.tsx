@@ -3,8 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Image, ActivityIndicator, Ale
 import { useAuth } from '../contexts/AuthContext';
 import { COLORS } from '../theme/theme';
 
-
-const ProfileScreen: React.FC = () => {
+const ProfileScreen = ({navigation}: any) => {
   const { user, initializing, signInWithGoogle, signOut } = useAuth();
 
   if (initializing) {
@@ -39,13 +38,19 @@ const ProfileScreen: React.FC = () => {
           <Image source={{ uri: user.photoURL ?? undefined }} style={styles.avatar} />
           <Text style={styles.name}>{user.displayName}</Text>
           <Text style={styles.email}>{user.email}</Text>
-          <TouchableOpacity style={styles.button} onPress={()=>{
-            
-
-          }} >
-             <Text style={styles.buttonText}>Register Complaint</Text>
-
+          <TouchableOpacity 
+            style={styles.button} 
+            onPress={() => navigation.navigate('ComplaintForm')}
+          >
+            <Text style={styles.buttonText}>Register Complaint</Text>
           </TouchableOpacity>
+          <TouchableOpacity 
+            style={styles.button} 
+            onPress={() => navigation.navigate('ComplainsScreen')}
+          >
+            <Text style={styles.buttonText}>View Complaints</Text>
+          </TouchableOpacity>
+
 
           <TouchableOpacity style={styles.button} onPress={onSignOut}>
             <Text style={styles.buttonText}>Logout</Text>

@@ -5,13 +5,23 @@ import DetailsScreen from './src/screens/DetailsScreen' // for native stack navi
 import TabNavigator from './src/navigators/TabNavigator'
 import { AuthProvider } from './src/contexts/AuthContext';
 import Notification from './src/pushNotification/notification';
+import ComplaintForm from './src/screens/ComplaintScreen'
+import ComplainsScreen from './src/screens/ComplainsScreen'
+import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import { useEffect } from 'react'
+import { Platform } from 'react-native'
+
+
 
 const stack = createNativeStackNavigator();
 const App = () => {
-  const WEB_CLIENT_ID = "965192633882-n9gue9isqj1g4mq00tosr3n3d7t0h63e.apps.googleusercontent.com"
+
   
+
+  const WEB_CLIENT_ID = "965192633882-n9gue9isqj1g4mq00tosr3n3d7t0h63e.apps.googleusercontent.com"
+   
   return (
+    <SafeAreaView style={{flex: 1}} >
     <AuthProvider webClientId={WEB_CLIENT_ID}>
       <NavigationContainer>
          <Notification />  
@@ -26,13 +36,19 @@ const App = () => {
             options={{animation : 'slide_from_bottom' }}
           ></stack.Screen>
           <stack.Screen 
-            name='Payments'
-            component={PaymentScreen}
+            name="ComplaintForm"
+            component={ComplaintForm}
             options={{animation : 'slide_from_bottom' }}
-          ></stack.Screen>
+           />
+          <stack.Screen 
+            name="ComplainsScreen"
+            component={ComplainsScreen}
+            options={{animation : 'slide_from_bottom' }}
+           />
         </stack.Navigator>
       </NavigationContainer>
     </AuthProvider>
+    </SafeAreaView>
 
 
   )

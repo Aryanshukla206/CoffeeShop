@@ -157,19 +157,18 @@ const ImageBackgroundInfo: React.FC<ImageBackgroundInfoProps> = ({
 
 const styles = StyleSheet.create({
   ItemBackgroundImage: {
-    paddingTop : 20,
     width: '100%',
     aspectRatio: 20 / 25,
     justifyContent: 'space-between',
   },
   ImageHeaderBarContainerWithBack: {
-    padding: SPACING.space_30,
+    padding: SPACING.space_20,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
   },
   ImageHeaderBarContainerWithoutBack: {
-    padding: SPACING.space_30,
+    padding: SPACING.space_20,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-end',

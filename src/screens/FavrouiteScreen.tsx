@@ -79,7 +79,6 @@ const FavoritesScreen = ({navigation}: any) => {
 
 const styles = StyleSheet.create({
   ScreenContainer: {
-    paddingTop :20,
     flex: 1,
     backgroundColor: COLORS.primaryBlackHex,
   },

@@ -170,7 +170,6 @@ const DetailsScreen = ({navigation, route}: any) => {
 const styles = StyleSheet.create({
   ScreenContainer: {
     flex: 1,
-    paddingTop : 20,
     backgroundColor: COLORS.primaryBlackHex,
   },
   ScrollViewFlex: {

@@ -261,11 +261,35 @@ iOS (.ipa):
 
 ## 15) Troubleshooting
 
+### General Issues
 - Run `npx react-native doctor` to verify environment.
-- If Android build is stuck: `cd android && ./gradlew clean && cd ..`.
 - Clear Metro cache: `rm -rf $TMPDIR/metro-cache && rm -rf node_modules && npm i`.
-- iOS pod issues: `cd ios && pod repo update && bundle exec pod install && cd ..`.
+
+### Android Issues
+- If Android build is stuck: `cd android && ./gradlew clean && cd ..`.
 - Emulator not launching: ensure HAXM/Arm virtualization, cold boot device.
+
+### iOS Issues
+- **Bundler/CocoaPods Error**: If you get "Could not find cocoapods-1.15.2" error:
+  ```bash
+  # Clean everything
+  rm -rf ios/vendor ios/Pods ios/Podfile.lock
+  rm -rf vendor  # if exists in project root
+  
+  # Install pods directly (bypasses Bundler)
+  cd ios && pod install && cd ..
+  ```
+- **React Native CLI still fails**: Use Xcode directly:
+  ```bash
+  cd ios && open coffeeShop.xcworkspace
+  # Then build and run from Xcode (⌘+R)
+  ```
+- **Alternative script**: Use the provided `run-ios.sh` script:
+  ```bash
+  ./run-ios.sh
+  ```
+- **Simulator issues**: Check available simulators with `xcrun simctl list devices available`
+- **iOS pod issues**: `cd ios && pod repo update && pod install && cd ..`
 
 
 ## 16) Capability Matrix (Learning Tracker)

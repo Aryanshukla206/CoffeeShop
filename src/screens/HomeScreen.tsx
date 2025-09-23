@@ -8,6 +8,8 @@ import {
   TouchableOpacity,
   View,
   ToastAndroid,
+  Button,
+  Image,
 } from 'react-native';
 import {useStore} from '../store/store';
 import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
@@ -24,6 +26,11 @@ import {FlatList} from 'react-native';
 import CoffeeCard from '../components/CoffeeCard';
 import {Dimensions} from 'react-native';
 import { useAuth } from '../contexts/AuthContext';
+
+
+
+
+
 
 const getCategoriesFromData = (data: any) => {
   let temp: any = {};
@@ -53,6 +60,7 @@ const HomeScreen = ({navigation}: any) => {
   const BeanList = useStore((state: any) => state.BeanList);
   const addToCart = useStore((state: any) => state.addToCart);
   const calculateCartPrice = useStore((state: any) => state.calculateCartPrice);
+
 
   const [categories, setCategories] = useState(
     getCategoriesFromData(CoffeeList),
@@ -122,6 +130,7 @@ const HomeScreen = ({navigation}: any) => {
     );
   };
   const {user} = useAuth();
+
   return (
     <View style={styles.ScreenContainer}>
       <StatusBar backgroundColor={COLORS.primaryBlackHex} />
@@ -130,10 +139,23 @@ const HomeScreen = ({navigation}: any) => {
         contentContainerStyle={styles.ScrollViewFlex}>
         {/* App Header */}
         <HeaderBar title={user?.displayName} picture={user?.providerData[0].photoURL} />
+          <Text style={styles.ScreenTitle}>
+            Find the best{'\n'}coffee for you
+          </Text>
+        <View style={styles.AgentContainer} >
+           <TouchableOpacity
+                onPress={() => {
+                  navigation.push('AgentScreen');
+                }}>
+                <Image
+                          source={require('../assets/app_images/BotCoffee.jpg')} // fallback
+                          style={styles.Image}
+                        />
+                  
+              </TouchableOpacity>
+        </View>
 
-        <Text style={styles.ScreenTitle}>
-          Find the best{'\n'}coffee for you
-        </Text>
+
 
         {/* Search Input */}
 
@@ -314,6 +336,11 @@ const styles = StyleSheet.create({
   ScrollViewFlex: {
     flexGrow: 1,
   },
+  AgentContainer:{
+    position : 'absolute',
+    right : 50,
+    top : 100
+  },
   ScreenTitle: {
     fontSize: FONTSIZE.size_28,
     fontFamily: FONTFAMILY.poppins_semibold,
@@ -337,6 +364,7 @@ const styles = StyleSheet.create({
     fontSize: FONTSIZE.size_14,
     color: COLORS.primaryWhiteHex,
   },
+  
   CategoryScrollViewStyle: {
     paddingHorizontal: SPACING.space_20,
     marginBottom: SPACING.space_20,
@@ -376,6 +404,11 @@ const styles = StyleSheet.create({
     marginTop: SPACING.space_20,
     fontFamily: FONTFAMILY.poppins_medium,
     color: COLORS.secondaryLightGreyHex,
+  },
+  Image: {
+    height: 60,
+    width: 60,
+    backgroundColor : 'plum',
   },
 });
 

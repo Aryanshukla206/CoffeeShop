@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -12,12 +12,18 @@ import {
   Platform,
 } from 'react-native';
 import { launchImageLibrary, Asset } from 'react-native-image-picker';
-import { BORDERRADIUS, COLORS, FONTFAMILY, FONTSIZE, SPACING } from '../theme/theme';
+import {
+  BORDERRADIUS,
+  COLORS,
+  FONTFAMILY,
+  FONTSIZE,
+  SPACING,
+} from '../theme/theme';
 import GradientBGIcon from '../components/GradientBGIcon';
 import firestore from '@react-native-firebase/firestore';
+import CaptureScreen from './CaptureScreen';
 
-
-export default function ComplaintScreen({navigation, route}: any) {
+export default function ComplaintScreen({ navigation, route }: any) {
   const [complaint, setComplaint] = useState('');
   const [file, setFile] = useState<Asset | null>(null);
   const [loading, setLoading] = useState(false);
@@ -58,7 +64,10 @@ export default function ComplaintScreen({navigation, route}: any) {
 
     const form = new FormData();
     form.append('file', {
-      uri: Platform.OS === 'android' ? picked.uri : picked.uri.replace('file://', ''),
+      uri:
+        Platform.OS === 'android'
+          ? picked.uri
+          : picked.uri.replace('file://', ''),
       name,
       type,
     } as any);
@@ -91,24 +100,24 @@ export default function ComplaintScreen({navigation, route}: any) {
     try {
       const result = await uploadToCloudinary(file);
 
-      console.log(result, "uploaded to cloudinary")
+      console.log(result, 'uploaded to cloudinary');
       const secureUrl = result?.secure_url ?? result?.url;
       if (!secureUrl) throw new Error('No URL returned from Cloudinary');
 
       Alert.alert('Success', 'Your complaint is registered', [{ text: 'OK' }]);
       console.log('Cloudinary response', result);
-        firestore()
-            .collection('CoffeeShopComplaints')
-            .add({
-                ImageUrl: secureUrl,
-                Text: complaint ,
-            })
-            .then(() => {
-                console.log('User added!');
-            });
+      firestore()
+        .collection('CoffeeShopComplaints')
+        .add({
+          ImageUrl: secureUrl,
+          Text: complaint,
+        })
+        .then(() => {
+          console.log('User added!');
+        });
       // reset
       setComplaint('');
-      
+
       setFile(null);
     } catch (err: any) {
       console.error('Upload error', err);
@@ -117,71 +126,136 @@ export default function ComplaintScreen({navigation, route}: any) {
       setLoading(false);
     }
   };
-   const BackHandler = () => {
+
+  const livePhoto = async () => {};
+
+  const BackHandler = () => {
     navigation.pop();
   };
 
   return (
     <View style={styles.container}>
-        <View style={styles.ImageHeaderBarContainerWithBack}>
-         <TouchableOpacity
-              onPress={() => {
-                BackHandler();
-              }}>
-              <GradientBGIcon
-                name="left"
-                color={COLORS.primaryWhiteHex}
-                size={FONTSIZE.size_16}
-              />
-            </TouchableOpacity>
-            </View>
+      <View style={styles.ImageHeaderBarContainerWithBack}>
+        <TouchableOpacity
+          onPress={() => {
+            BackHandler();
+          }}
+        >
+          <GradientBGIcon
+            name="left"
+            color={COLORS.primaryWhiteHex}
+            size={FONTSIZE.size_16}
+          />
+        </TouchableOpacity>
+      </View>
       <Text style={styles.heading}>Register Complaint</Text>
 
       <TextInput
         style={styles.input}
-        placeholder = "Enter complaint"
+        placeholder="Enter complaint"
         value={complaint}
         onChangeText={setComplaint}
         multiline
       />
 
       <TouchableOpacity style={styles.pickBtn} onPress={pickFile}>
-        <Text style={styles.pickBtnText}>{file ? file.fileName : 'Pick File'}</Text>
+        <Text style={styles.pickBtnText}>
+          {file ? file.fileName : 'Pick File'}
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.pickBtn} onPress={()=>'CaptureVideo'}>
+        <Text style={styles.pickBtnText}>
+          {file ? file.fileName : 'Send a live video'}
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.pickBtn}
+        onPress={() => navigation.navigate('CaptureScreen')}
+      >
+        <Text style={styles.pickBtnText}>
+          {file ? file.fileName : 'Send a live photo'}
+        </Text>
       </TouchableOpacity>
 
       {file?.uri && (
-        <Image source={{ uri: file.uri }} style={styles.preview} resizeMode="cover" />
+        <Image
+          source={{ uri: file.uri }}
+          style={styles.preview}
+          resizeMode="cover"
+        />
       )}
 
       {loading ? (
         <ActivityIndicator size="large" color="#007bff" />
       ) : (
         <TouchableOpacity style={styles.submitButton} onPress={submitComplaint}>
-                <Text style={styles.pickBtnText}>{ 'Submit'}</Text>
-         </TouchableOpacity>
+          <Text style={styles.pickBtnText}>{'Submit'}</Text>
+        </TouchableOpacity>
       )}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16,  color: COLORS.primaryWhiteHex  , backgroundColor: COLORS.primaryBlackHex, paddingTop:20, justifyContent: 'center'},
-  heading: { fontSize: 20, marginBottom: 12 , alignItems :'center', color :COLORS.primaryWhiteHex, marginHorizontal: 'auto', },
-  input: { borderWidth: 1, color :COLORS.primaryWhiteHex , borderColor: COLORS.primaryWhiteHex, borderRadius: 6, padding: 10, minHeight: 80, marginBottom: 12,fontFamily: FONTFAMILY.poppins_semibold,
-    fontSize: FONTSIZE.size_14},
-  pickBtn: { backgroundColor: COLORS.primaryOrangeHex, padding: 12, borderRadius: BORDERRADIUS.radius_20, marginBottom: 12 },
-  pickBtnText: { color: COLORS.primaryWhiteHex, textAlign: 'center',fontFamily: FONTFAMILY.poppins_semibold, fontSize: FONTSIZE.size_18, },
-  preview: {   width: 200, height: 200, borderRadius: 8, marginBottom: 12 , alignContent: 'center', justifyContent:  'center'},
+  container: {
+    flex: 1,
+    padding: 16,
+    color: COLORS.primaryWhiteHex,
+    backgroundColor: COLORS.primaryBlackHex,
+    paddingTop: 20,
+    justifyContent: 'center',
+  },
+  heading: {
+    fontSize: 20,
+    marginBottom: 12,
+    alignItems: 'center',
+    color: COLORS.primaryWhiteHex,
+    marginHorizontal: 'auto',
+  },
+  input: {
+    borderWidth: 1,
+    color: COLORS.primaryWhiteHex,
+    borderColor: COLORS.primaryWhiteHex,
+    borderRadius: 6,
+    padding: 10,
+    minHeight: 80,
+    marginBottom: 12,
+    fontFamily: FONTFAMILY.poppins_semibold,
+    fontSize: FONTSIZE.size_14,
+  },
+  pickBtn: {
+    backgroundColor: COLORS.primaryOrangeHex,
+    padding: 12,
+    borderRadius: BORDERRADIUS.radius_20,
+    marginBottom: 12,
+  },
+  pickBtnText: {
+    color: COLORS.primaryWhiteHex,
+    textAlign: 'center',
+    fontFamily: FONTFAMILY.poppins_semibold,
+    fontSize: FONTSIZE.size_18,
+  },
+  preview: {
+    width: 200,
+    height: 200,
+    borderRadius: 8,
+    marginBottom: 12,
+    alignContent: 'center',
+    justifyContent: 'center',
+  },
   ImageHeaderBarContainerWithBack: {
     padding: SPACING.space_20,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    position : 'absolute',
-    top : 20,
-    left : 5,
+    position: 'absolute',
+    top: 20,
+    left: 5,
   },
-  submitButton : {
-   backgroundColor: COLORS.primaryLightGreyHex, padding: 12, borderRadius: BORDERRADIUS.radius_20, marginBottom: 12
-  }
+  submitButton: {
+    backgroundColor: COLORS.primaryLightGreyHex,
+    padding: 12,
+    borderRadius: BORDERRADIUS.radius_20,
+    marginBottom: 12,
+  },
 });

@@ -4,6 +4,9 @@ import {COLORS, FONTFAMILY, FONTSIZE, SPACING} from '../theme/theme';
 import GradientBGIcon from './GradientBGIcon';
 import ProfilePic from './ProfilePic';
 
+
+
+
 interface HeaderBarProps {
   title?: any;
   picture?: string;
@@ -14,7 +17,7 @@ const HeaderBar: React.FC<HeaderBarProps> = ({title , picture}) => {
   return (
     <View style={styles.HeaderContainer}>
       <GradientBGIcon
-        name="menu"
+        name="home"
         color={COLORS.primaryLightGreyHex}
         size={FONTSIZE.size_16}
       />

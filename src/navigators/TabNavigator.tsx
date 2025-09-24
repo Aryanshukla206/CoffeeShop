@@ -1,14 +1,15 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {COLORS} from '../theme/theme';
-import {BlurView} from '@react-native-community/blur';
+import { StyleSheet } from 'react-native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { COLORS } from '../theme/theme';
+import { BlurView } from '@react-native-community/blur';
 import HomeScreen from '../screens/HomeScreen';
 import FavoritesScreen from '../screens/FavrouiteScreen';
 import CartScreen from '../screens/CartScreen';
 import CustomIcon from '../components/CustomIcon';
 import ProfileScreen from '../screens/ProfileScreen';
-
+import GetFitScreen from '../screens/GetFitScreen';
+import { Icon } from 'react-native-vector-icons/Icon';
 
 const Tab = createBottomTabNavigator();
 
@@ -75,12 +76,27 @@ const TabNavigator = () => {
         }}
       ></Tab.Screen>
       <Tab.Screen
+        name="GetFit"
+        component={GetFitScreen}
+        options={{
+          tabBarIcon: ({ focused, color, size }) => (
+            <CustomIcon
+              name="gym-fitness-svgrepo-com"
+              size={25}
+              color={
+                focused ? COLORS.primaryOrangeHex : COLORS.primaryLightGreyHex
+              }
+            />    
+          ),
+        }}
+      ></Tab.Screen>
+      <Tab.Screen
         name="Profile"
         component={ProfileScreen}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <CustomIcon
-              name="user"
+              name="profile"
               size={25}
               color={
                 focused ? COLORS.primaryOrangeHex : COLORS.primaryLightGreyHex

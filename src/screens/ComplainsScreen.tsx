@@ -29,11 +29,11 @@ const ComplainsScreen = ({ navigation }: any) => {
         snapshot => {
           const items = snapshot.docs.map(doc => {
             const data = doc.data();
-            console.log(data, "data==")
+            console.log(data, 'data==');
             return {
               id: doc.id,
               imageUrl: data.ImageUrl ?? data.imageUrl ?? null,
-              text: data.Text ,
+              text: data.Text,
             };
           });
           setComplaints(items);
@@ -42,15 +42,19 @@ const ComplainsScreen = ({ navigation }: any) => {
         err => {
           console.error('Firestore onSnapshot error:', err);
           setLoading(false);
-        }
+        },
       );
 
     return () => unsubscribe();
   }, []);
-  console.log(complaints, "complaints from firebase=======.")
+  console.log(complaints, 'complaints from firebase=======.');
   // console.log(items, "items===========")
   const renderItem = ({ item }: { item: any }) => (
-    <ComplainCard id={item.id} text={item.text} imageUrl={item.imageUrl ?? ''} />
+    <ComplainCard
+      id={item.id}
+      text={item.text}
+      imageUrl={item.imageUrl ?? ''}
+    />
   );
 
   return (
@@ -58,7 +62,11 @@ const ComplainsScreen = ({ navigation }: any) => {
       <StatusBar backgroundColor={COLORS.primaryBlackHex} />
       <View style={styles.ImageHeaderBarContainerWithBack}>
         <TouchableOpacity onPress={() => BackHandler()}>
-          <GradientBGIcon name="left" color={COLORS.primaryWhiteHex} size={FONTSIZE.size_16} />
+          <GradientBGIcon
+            name="left"
+            color={COLORS.primaryWhiteHex}
+            size={FONTSIZE.size_16}
+          />
         </TouchableOpacity>
       </View>
 
@@ -71,11 +79,13 @@ const ComplainsScreen = ({ navigation }: any) => {
       ) : (
         <FlatList
           data={complaints}
-          keyExtractor={(item) => item.id}
+          keyExtractor={item => item.id}
           renderItem={renderItem}
           contentContainerStyle={styles.listContent}
           showsVerticalScrollIndicator={false}
-          ListEmptyComponent={<Text style={styles.emptyText}>No complaints found.</Text>}
+          ListEmptyComponent={
+            <Text style={styles.emptyText}>No complaints found.</Text>
+          }
         />
       )}
     </View>

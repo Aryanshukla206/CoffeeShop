@@ -8,12 +8,9 @@ import ComplaintForm from './src/screens/ComplaintScreen';
 import ComplainsScreen from './src/screens/ComplainsScreen';
 import {
   SafeAreaView,
-  useSafeAreaInsets,
 } from 'react-native-safe-area-context';
-import { useEffect } from 'react';
-import { Platform } from 'react-native';
 import AgentScreen from './src/screens/AgentScreen';
-import RecordingScreen from './src/screens/CaptureScreen';
+
 import CaptureScreen from './src/screens/CaptureScreen';
 import VideoCaptureScreen from './src/screens/VideoCapture';
 const stack = createNativeStackNavigator();

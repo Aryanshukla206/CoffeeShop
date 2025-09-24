@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   ScrollView,
   StatusBar,
@@ -10,6 +10,8 @@ import {
   ToastAndroid,
   Button,
   Image,
+  Animated,
+  Easing,
 } from 'react-native';
 import {useStore} from '../store/store';
 import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
@@ -129,6 +131,32 @@ const HomeScreen = ({navigation}: any) => {
       ToastAndroid.CENTER,
     );
   };
+  const borderAnim = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(borderAnim, {
+          toValue: 1,
+          duration: 1000,
+          easing: Easing.linear,
+          useNativeDriver: false,
+        }),
+        Animated.timing(borderAnim, {
+          toValue: 0,
+          duration: 1000,
+          easing: Easing.linear,
+          useNativeDriver: false,
+        }),
+      ]),
+    ).start();
+  }, [borderAnim]);
+
+
+  const borderColorInterpolation = borderAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['#ff8c00', '#32cd32'], // orange → green glow
+  });
   const {user} = useAuth();
 
   return (
@@ -136,26 +164,35 @@ const HomeScreen = ({navigation}: any) => {
       <StatusBar backgroundColor={COLORS.primaryBlackHex} />
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.ScrollViewFlex}>
+        contentContainerStyle={styles.ScrollViewFlex}
+      >
         {/* App Header */}
-        <HeaderBar title={user?.displayName} picture={user?.providerData[0].photoURL} />
-          <Text style={styles.ScreenTitle}>
-            Find the best{'\n'}coffee for you
-          </Text>
-        <View style={styles.AgentContainer} >
-           <TouchableOpacity
-                onPress={() => {
-                  navigation.push('AgentScreen');
-                }}>
-                <Image
-                          source={require('../assets/app_images/BotCoffee.jpg')} // fallback
-                          style={styles.Image}
-                        />
-                  
-              </TouchableOpacity>
+        <HeaderBar
+          title={user?.displayName}
+          picture={user?.providerData[0].photoURL}
+        />
+        <Text style={styles.ScreenTitle}>
+          Find the best{'\n'}coffee for you
+        </Text>
+        <View style={styles.AgentContainer}>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.push('AgentScreen');
+            }}
+          >
+            <Animated.View
+              style={[
+                styles.ImageWrapper,
+                { borderColor: borderColorInterpolation },
+              ]}
+            >
+              <Image
+                source={require('../assets/app_images/BotCoffee.jpg')}
+                style={styles.Image}
+              />
+            </Animated.View>
+          </TouchableOpacity>
         </View>
-
-
 
         {/* Search Input */}
 
@@ -163,7 +200,8 @@ const HomeScreen = ({navigation}: any) => {
           <TouchableOpacity
             onPress={() => {
               searchCoffee(searchText);
-            }}>
+            }}
+          >
             <CustomIcon
               style={styles.InputIcon}
               name="search"
@@ -189,7 +227,8 @@ const HomeScreen = ({navigation}: any) => {
             <TouchableOpacity
               onPress={() => {
                 resetSearchCoffee();
-              }}>
+              }}
+            >
               <CustomIcon
                 style={styles.InputIcon}
                 name="close"
@@ -207,11 +246,13 @@ const HomeScreen = ({navigation}: any) => {
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.CategoryScrollViewStyle}>
+          contentContainerStyle={styles.CategoryScrollViewStyle}
+        >
           {categories.map((data, index) => (
             <View
               key={index.toString()}
-              style={styles.CategoryScrollViewContainer}>
+              style={styles.CategoryScrollViewContainer}
+            >
               <TouchableOpacity
                 style={styles.CategoryScrollViewItem}
                 onPress={() => {
@@ -219,18 +260,23 @@ const HomeScreen = ({navigation}: any) => {
                     animated: true,
                     offset: 0,
                   });
-                  setCategoryIndex({index: index, category: categories[index]});
+                  setCategoryIndex({
+                    index: index,
+                    category: categories[index],
+                  });
                   setSortedCoffee([
                     ...getCoffeeList(categories[index], CoffeeList),
                   ]);
-                }}>
+                }}
+              >
                 <Text
                   style={[
                     styles.CategoryText,
                     categoryIndex.index == index
-                      ? {color: COLORS.primaryOrangeHex}
+                      ? { color: COLORS.primaryOrangeHex }
                       : {},
-                  ]}>
+                  ]}
+                >
                   {data}
                 </Text>
                 {categoryIndex.index == index ? (
@@ -257,7 +303,7 @@ const HomeScreen = ({navigation}: any) => {
           data={sortedCoffee}
           contentContainerStyle={styles.FlatListContainer}
           keyExtractor={item => item.id}
-          renderItem={({item}) => {
+          renderItem={({ item }) => {
             return (
               <TouchableOpacity
                 onPress={() => {
@@ -266,7 +312,8 @@ const HomeScreen = ({navigation}: any) => {
                     id: item.id,
                     type: item.type,
                   });
-                }}>
+                }}
+              >
                 <CoffeeCard
                   id={item.id}
                   index={item.index}
@@ -294,10 +341,10 @@ const HomeScreen = ({navigation}: any) => {
           data={BeanList}
           contentContainerStyle={[
             styles.FlatListContainer,
-            {marginBottom: tabBarHeight},
+            { marginBottom: tabBarHeight },
           ]}
           keyExtractor={item => item.id}
-          renderItem={({item}) => {
+          renderItem={({ item }) => {
             return (
               <TouchableOpacity
                 onPress={() => {
@@ -306,7 +353,8 @@ const HomeScreen = ({navigation}: any) => {
                     id: item.id,
                     type: item.type,
                   });
-                }}>
+                }}
+              >
                 <CoffeeCard
                   id={item.id}
                   index={item.index}
@@ -336,10 +384,10 @@ const styles = StyleSheet.create({
   ScrollViewFlex: {
     flexGrow: 1,
   },
-  AgentContainer:{
-    position : 'absolute',
-    right : 50,
-    top : 100
+  AgentContainer: {
+    position: 'absolute',
+    right: 30,
+    top: 100,
   },
   ScreenTitle: {
     fontSize: FONTSIZE.size_28,
@@ -364,7 +412,7 @@ const styles = StyleSheet.create({
     fontSize: FONTSIZE.size_14,
     color: COLORS.primaryWhiteHex,
   },
-  
+
   CategoryScrollViewStyle: {
     paddingHorizontal: SPACING.space_20,
     marginBottom: SPACING.space_20,
@@ -405,10 +453,15 @@ const styles = StyleSheet.create({
     fontFamily: FONTFAMILY.poppins_medium,
     color: COLORS.secondaryLightGreyHex,
   },
+  ImageWrapper: {
+    borderWidth: 4,
+    borderRadius: 12,
+    padding: 2,
+  },
   Image: {
     height: 60,
     width: 60,
-    backgroundColor : 'plum',
+    borderRadius: 8,
   },
 });
 

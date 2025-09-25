@@ -6,9 +6,7 @@ import { AuthProvider } from './src/contexts/AuthContext';
 import Notification from './src/pushNotification/notification';
 import ComplaintForm from './src/screens/ComplaintScreen';
 import ComplainsScreen from './src/screens/ComplainsScreen';
-import {
-  SafeAreaView,
-} from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import AgentScreen from './src/screens/AgentScreen';
 
 import CaptureScreen from './src/screens/CaptureScreen';
@@ -16,8 +14,7 @@ import VideoCaptureScreen from './src/screens/VideoCapture';
 const stack = createNativeStackNavigator();
 const App = () => {
   const WEB_CLIENT_ID =
-    '965192633882-n9gue9isqj1g4mq00tosr3n3d7t0h63e.apps.googleusercontent.com';
-
+    '714711678580-vo721svv1linmadgac59i3c19g8uhgd6.apps.googleusercontent.com';
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <AuthProvider webClientId={WEB_CLIENT_ID}>

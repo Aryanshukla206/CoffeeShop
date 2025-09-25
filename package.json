@@ -1,5 +1,5 @@
 {
-  "name": "coffeeShop",
+  "name": "coffeeshop",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -34,6 +34,8 @@
     "react-native-camera-kit": "^16.1.2",
     "react-native-fs": "^2.20.0",
     "react-native-geolocation-service": "^5.3.1",
+    "react-native-google-fit": "^0.21.0",
+    "react-native-health-connect": "^3.4.0",
     "react-native-image-picker": "^8.2.1",
     "react-native-linear-gradient": "^2.8.3",
     "react-native-permissions": "^5.4.2",

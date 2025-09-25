@@ -18,7 +18,7 @@ import firestore from '@react-native-firebase/firestore';
 import RNFS from 'react-native-fs';
 
 const CLOUD_NAME = 'dtgtukgvf';
-const UPLOAD_PRESET = 'coffeeShop';
+const UPLOAD_PRESET = 'coffeeshop';
 
 type Mode = 'none' | 'image' | 'livePhoto' | 'liveVideo' | 'pdf';
 
@@ -269,7 +269,7 @@ export default function ComplaintScreen({ navigation, route }: any) {
       if (!secureUrl) throw new Error('Cloudinary did not return URL');
 
       await firestore()
-        .collection('CoffeeShopComplaints')
+        .collection('coffeeshopComplaints')
         .add({
           text: complaint,
           mediaUrl: secureUrl,

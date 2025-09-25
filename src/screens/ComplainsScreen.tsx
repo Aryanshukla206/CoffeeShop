@@ -24,7 +24,7 @@ const ComplainsScreen = ({ navigation }: any) => {
 
   useEffect(() => {
     const unsubscribe = firestore()
-      .collection('CoffeeShopComplaints')
+      .collection('coffeeshopComplaints')
       .onSnapshot(
         snapshot => {
           const items = snapshot.docs.map(doc => {

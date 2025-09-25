@@ -1,7 +1,6 @@
-# CoffeeShop React Native App – In‑Depth Guide
+# coffeeshop React Native App – In‑Depth Guide
 
 A learning-focused React Native application demonstrating end-to-end mobile app concepts: environment setup (Android Studio + Xcode), app bootstrapping, core components and styling, navigation patterns, state management, Firebase (Auth + FCM), permissions, assets, theming, and build/release.
-
 
 ## 1) Prerequisites and Environment Setup
 
@@ -25,35 +24,41 @@ open /opt/homebrew/Caskroom/zulu@17/<version number>
 Recommended: Run the official guide once: https://reactnative.dev/docs/set-up-your-environment
 
 Environment variables (Android):
+
 ```bash
 # ~/.zshrc (example)
 export ANDROID_HOME="$HOME/Library/Android/sdk"
 export PATH="$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$PATH"
 ```
+
 Reload your shell after editing.
 
 Health check:
+
 ```bash
 npx react-native doctor
 ```
 
-
 ## 2) Project Creation Options
 
 - Native CLI:
+
 ```bash
-npx @react-native-community/cli init CoffeeShop
+npx @react-native-community/cli init coffeeshop
 ```
+
 - Expo (alternative):
+
 ```bash
 npx create-expo-app@latest coffeeshop --template blank@sdk-49
 ```
-This repository uses the Native CLI path.
 
+This repository uses the Native CLI path.
 
 ## 3) Getting Started (this repo)
 
 Install dependencies and start Metro:
+
 ```bash
 # from project root
 npm install
@@ -61,11 +66,13 @@ npm start  # or: yarn start
 ```
 
 Run Android:
+
 ```bash
 npm run android  # or: yarn android
 ```
 
 Run iOS:
+
 ```bash
 gem install bundler  # once
 cd ios && bundle install && bundle exec pod install && cd ..
@@ -73,14 +80,15 @@ npm run ios  # or: yarn ios
 ```
 
 Clean Android build if needed:
+
 ```bash
 cd android && ./gradlew clean && cd ..
 ```
 
-
 ## 4) Android/iOS Native Configuration Notes
 
 - Enable React Native Screens optimization (Android): edit `android/app/src/main/java/<your package>/MainActivity.java`:
+
 ```java
 import android.os.Bundle;
 
@@ -89,26 +97,28 @@ protected void onCreate(Bundle savedInstanceState) {
   super.onCreate(null);
 }
 ```
+
 - Portrait-only (Android): set orientation in `AndroidManifest.xml` for the main activity.
 - iOS pods: always run `bundle exec pod install` after native dependency changes.
-
 
 ## 5) Assets and Linking
 
 Place images/fonts in `src/assets`.
 
 `react-native.config.js` is configured to link assets:
+
 ```js
 module.exports = {
-    project: { ios: {}, android: {} },
-    assets: ['./coffeeShop/src/assets'],
+  project: { ios: {}, android: {} },
+  assets: ['./coffeeshop/src/assets'],
 };
 ```
+
 Link once:
+
 ```bash
 npx react-native-asset
 ```
-
 
 ## 6) Project Structure (src/)
 
@@ -127,8 +137,7 @@ npx react-native-asset
 
 Guideline: screens orchestrate data and pass props to presentational components. Keep separation of concerns.
 
-
-## 7) Core React Native Concepts (with CoffeeShop context)
+## 7) Core React Native Concepts (with coffeeshop context)
 
 - View: rectangular container for layout, touch, accessibility (similar to `<div>`).
 - Text: display text.
@@ -143,39 +152,43 @@ Guideline: screens orchestrate data and pass props to presentational components.
 - Alert: native alert dialogs for simple confirmations.
 
 Styling and Box Model:
+
 - Use `StyleSheet.create` or inline styles (camelCase). Multiple styles array: last wins.
 - Box Model: margin > border > padding > content.
 - Shadows: iOS: `shadowColor`, `shadowOffset`, `shadowOpacity`, `shadowRadius`; Android: `elevation`.
 
 Layout with Flexbox:
+
 - `flexDirection`: row/column, `justifyContent` (main axis), `alignItems` (cross axis), `alignSelf` per-item.
 - `flex`, `flexGrow`, `flexShrink`, `flexBasis`, `flexWrap`, `alignContent`.
 - Positioning: `position: 'relative' | 'absolute'`; use absolute for overlays/precise placement.
 
 Platform/Dimensions/Safe Areas:
+
 - `Platform.OS` for minor diffs; `Platform.select` for larger diffs.
 - Platform files: `Component.ios.tsx`, `Component.android.tsx` for major divergence.
 - `Dimensions` (static) vs `useWindowDimensions` (reactive) for layout; prefer the hook for rotation.
 - `SafeAreaView` to avoid notches/home indicators.
 
-
 ## 8) Navigation (React Navigation)
 
 Install:
+
 ```bash
 npm install @react-navigation/native
 npm install react-native-screens react-native-safe-area-context
 npm install @react-navigation/native-stack
 npm install @react-navigation/bottom-tabs
 ```
+
 Android requires `MainActivity` `onCreate(null)` (see above) for proper screen behavior.
 
 Patterns used:
+
 - Stack Navigation (auth flow, detail screens)
 - Tab Navigation (primary app sections)
 
 Keep navigators in `src/navigators/`, define screen params/types, and wrap app with `NavigationContainer`.
-
 
 ## 9) State Management and Persistence
 
@@ -184,40 +197,43 @@ Keep navigators in `src/navigators/`, define screen params/types, and wrap app w
 - AsyncStorage: persistence layer for user/session/preferences.
 
 Example concepts:
+
 - Create stores in `src/store/`, export hooks (e.g., `useCartStore`) with actions/selectors.
 - Persist slices using `zustand/middleware` + AsyncStorage.
-
 
 ## 10) Permissions
 
 Centralized helpers under `src/permissions/` to request and check runtime permissions (camera, photos, notifications, etc.).
+
 - Android specifics: declare in `AndroidManifest.xml`.
 - iOS specifics: add usage descriptions to `Info.plist` (e.g., `NSCameraUsageDescription`).
 
 Docs: https://reactnative.dev/docs/permissionsandroid
 
-
 ## 11) Firebase Authentication (Email/Google)
 
 Create a Firebase project, then:
+
 ```bash
 cd android && ./gradlew signinReport && cd ..
 ```
+
 Copy SHA-1 and SHA-256 (debug) into Firebase Android app settings. Download `google-services.json` → place in `android/app/`.
 
 Install packages:
+
 ```bash
 npm install @react-native-firebase/app @react-native-firebase/auth @react-native-google-signin/google-signin
 ```
 
 Android Gradle setup:
+
 - Project `android/build.gradle`: add Google services classpath if not present.
 - App `android/app/build.gradle`: apply `com.google.gms.google-services` plugin.
 
 Implement Google Sign-In in `src/auth/` and wire into your auth stack. Ensure reverse client id and URL schemes for iOS if adding iOS Google Sign-In later.
 
 Docs: https://rnfirebase.io/auth/usage
-
 
 ## 12) Push Notifications (Firebase Cloud Messaging)
 
@@ -227,7 +243,6 @@ Docs: https://rnfirebase.io/auth/usage
 
 Docs: https://rnfirebase.io/messaging/usage
 
-
 ## 13) Theming, Lottie, and UI Enhancements
 
 - `react-native-linear-gradient` for gradients.
@@ -236,17 +251,19 @@ Docs: https://rnfirebase.io/messaging/usage
 - `react-native-vector-icons` (types via `@types/react-native-vector-icons`).
 
 Install:
+
 ```bash
 npm install react-native-linear-gradient @react-native-community/blur lottie-react-native @react-native-async-storage/async-storage zustand immer
 npm i --save-dev @types/react-native-vector-icons
 ```
 
-
 ## 14) Build and Release
 
 Android (APK/AAB):
+
 - Generate a release keystore and configure `gradle.properties`.
 - Build:
+
 ```bash
 cd android
 ./gradlew assembleRelease      # APK
@@ -255,33 +272,38 @@ cd ..
 ```
 
 iOS (.ipa):
+
 - Use Xcode: set scheme to Release, archive, then export .ipa via Organizer.
 - Or use `fastlane` (optional) for automation.
-
 
 ## 15) Troubleshooting
 
 ### General Issues
+
 - Run `npx react-native doctor` to verify environment.
 - Clear Metro cache: `rm -rf $TMPDIR/metro-cache && rm -rf node_modules && npm i`.
 
 ### Android Issues
+
 - If Android build is stuck: `cd android && ./gradlew clean && cd ..`.
 - Emulator not launching: ensure HAXM/Arm virtualization, cold boot device.
 
 ### iOS Issues
+
 - **Bundler/CocoaPods Error**: If you get "Could not find cocoapods-1.15.2" error:
+
   ```bash
   # Clean everything
   rm -rf ios/vendor ios/Pods ios/Podfile.lock
   rm -rf vendor  # if exists in project root
-  
+
   # Install pods directly (bypasses Bundler)
   cd ios && pod install && cd ..
   ```
+
 - **React Native CLI still fails**: Use Xcode directly:
   ```bash
-  cd ios && open coffeeShop.xcworkspace
+  cd ios && open coffeeshop.xcworkspace
   # Then build and run from Xcode (⌘+R)
   ```
 - **Alternative script**: Use the provided `run-ios.sh` script:
@@ -291,31 +313,28 @@ iOS (.ipa):
 - **Simulator issues**: Check available simulators with `xcrun simctl list devices available`
 - **iOS pod issues**: `cd ios && pod repo update && pod install && cd ..`
 
-
 ## 16) Capability Matrix (Learning Tracker)
 
-| Category | Capability/Feature | Description | Official Docs/Resources | Completed | Notes | Column 1 |
-|---|---|---|---|---|---|---|
-| React Native Core Features | UI/UX | Understand core components (View, Text, Image) and Flexbox layouts. | https://reactnative.dev/docs/getting-started | TRUE |  |  |
-| React Native Core Features | State Management | Manage data via hooks (useState/useContext) or libraries. | https://medium.com/@ahmad.almezaal/understanding-state-management-in-react-native-a-deep-dive-into-redux-and-redux-toolkit-0d89e6c223f2 | FALSE | MST, context, Redux |  |
-| React Native Core Features | Navigation | Screen transitions with React Navigation. | https://docs.sentry.io/platforms/react-native/tracing/instrumentation/react-native-navigation/ | TRUE | Tab + Stack |  |
-| Essential Modules & Functionalities | Authentication | Firebase Authentication (email/Google). | https://rnfirebase.io/auth/usage | TRUE | Firebase Auth |  |
-| Essential Modules & Functionalities | Push Notifications | Firebase Cloud Messaging (FCM). | https://rnfirebase.io/messaging/usage | TRUE | FCM |  |
-| Essential Modules & Functionalities | File & Media Sharing | Share content to other apps. | https://www.npmjs.com/package/react-native-share | FALSE |  |  |
-| Essential Modules & Functionalities | Video Streaming | Video playback (local/remote). | https://github.com/react-native-video/react-native-video | FALSE |  |  |
-| Essential Modules & Functionalities | Permissions | Manage runtime permissions. | https://reactnative.dev/docs/permissionsandroid | TRUE |  |  |
-| Essential Modules & Functionalities | App Optimization & Security | Optimize size (R8/ProGuard), security best practices. | https://metadesignsolutions.com/security-best-practices-in-react-native-development/ | FALSE |  |  |
-| Essential Modules & Functionalities | Library Integrations | Integrate third-party libraries. | https://www.intuz.com/blog/react-native-libraries-for-cross-platform-development | FALSE |  |  |
-| Essential Modules & Functionalities | Third Party API Integrations | Integrate external APIs. |  | FALSE |  |  |
-| Essential Modules & Functionalities | Build, Convert to .apk / .ipa | Release builds for Android/iOS. |  | FALSE |  |  |
-
+| Category                            | Capability/Feature            | Description                                                         | Official Docs/Resources                                                                                                                 | Completed | Notes               | Column 1 |
+| ----------------------------------- | ----------------------------- | ------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- | --------- | ------------------- | -------- |
+| React Native Core Features          | UI/UX                         | Understand core components (View, Text, Image) and Flexbox layouts. | https://reactnative.dev/docs/getting-started                                                                                            | TRUE      |                     |          |
+| React Native Core Features          | State Management              | Manage data via hooks (useState/useContext) or libraries.           | https://medium.com/@ahmad.almezaal/understanding-state-management-in-react-native-a-deep-dive-into-redux-and-redux-toolkit-0d89e6c223f2 | FALSE     | MST, context, Redux |          |
+| React Native Core Features          | Navigation                    | Screen transitions with React Navigation.                           | https://docs.sentry.io/platforms/react-native/tracing/instrumentation/react-native-navigation/                                          | TRUE      | Tab + Stack         |          |
+| Essential Modules & Functionalities | Authentication                | Firebase Authentication (email/Google).                             | https://rnfirebase.io/auth/usage                                                                                                        | TRUE      | Firebase Auth       |          |
+| Essential Modules & Functionalities | Push Notifications            | Firebase Cloud Messaging (FCM).                                     | https://rnfirebase.io/messaging/usage                                                                                                   | TRUE      | FCM                 |          |
+| Essential Modules & Functionalities | File & Media Sharing          | Share content to other apps.                                        | https://www.npmjs.com/package/react-native-share                                                                                        | FALSE     |                     |          |
+| Essential Modules & Functionalities | Video Streaming               | Video playback (local/remote).                                      | https://github.com/react-native-video/react-native-video                                                                                | FALSE     |                     |          |
+| Essential Modules & Functionalities | Permissions                   | Manage runtime permissions.                                         | https://reactnative.dev/docs/permissionsandroid                                                                                         | TRUE      |                     |          |
+| Essential Modules & Functionalities | App Optimization & Security   | Optimize size (R8/ProGuard), security best practices.               | https://metadesignsolutions.com/security-best-practices-in-react-native-development/                                                    | FALSE     |                     |          |
+| Essential Modules & Functionalities | Library Integrations          | Integrate third-party libraries.                                    | https://www.intuz.com/blog/react-native-libraries-for-cross-platform-development                                                        | FALSE     |                     |          |
+| Essential Modules & Functionalities | Third Party API Integrations  | Integrate external APIs.                                            |                                                                                                                                         | FALSE     |                     |          |
+| Essential Modules & Functionalities | Build, Convert to .apk / .ipa | Release builds for Android/iOS.                                     |                                                                                                                                         | FALSE     |                     |          |
 
 ## 17) Tools and References
 
 - Splash screen: `react-native-splash-screen` (assets: 4096×4096 recommended). Video: https://www.youtube.com/watch?v=_hgsAlPTGXY
 - Guide: https://github.com/crazycodeboy/react-native-splash-screen
 - Icons: IconKitchen for asset generation
-
 
 ## 18) Command Reference (Quick)
 
@@ -340,13 +359,11 @@ cd ios && bundle exec pod install && cd ..
 npx react-native-asset
 ```
 
-
 ## 19) What to Explore Next
 
 - Add File/Media sharing, video playback to complete matrix
 - Add optimization and security hardening (ProGuard/R8 rules, code push, obfuscation)
 - Add third-party API examples (REST + OAuth)
-
 
 —
 This README is tailored to this repository’s structure under `src/` and captures the learning flow from setup → concepts → modules → build/release. Adjust the matrix as you complete items.

@@ -1,11 +1,11 @@
 import firestore from '@react-native-firebase/firestore';
 
+const coffeComplaints = firestore().collection('coffeeshopComplaints');
 
-const coffeComplaints = firestore().collection('CoffeeShopComplaints');
+console.log(coffeComplaints, ' complaintsssss --------');
+const complaint = await firestore()
+  .collection('coffeeshopComplaints')
+  .doc('VgoRFCv13Ps4gpF244Nk')
+  .get();
 
-console.log(coffeComplaints, " complaintsssss --------")
-const complaint = await firestore().collection('CoffeeShopComplaints').doc('VgoRFCv13Ps4gpF244Nk').get();
-
-console.log(complaint, "particular complaint --------")
-
-
+console.log(complaint, 'particular complaint --------');

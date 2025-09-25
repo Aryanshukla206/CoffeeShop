@@ -20,7 +20,7 @@
 // };
 
 // const CLOUD_NAME = 'dtgtukgvf';
-// const UPLOAD_PRESET = 'coffeeShop';
+// const UPLOAD_PRESET = 'coffeeshop';
 
 // // utility: move file from temp -> documents and return new path
 // async function moveToAppStorage(tempPath: string) {
@@ -369,7 +369,9 @@ export default function VideoCaptureScreen({ navigation, route }: any) {
   async function moveToAppStorage(tempPath: string) {
     const ext = tempPath.split('.').pop() ?? 'mp4';
     const destPath = `${RNFS.DocumentDirectoryPath}/video_${Date.now()}.${ext}`;
-    const normalized = tempPath.startsWith('file://') ? tempPath.replace('file://', '') : tempPath;
+    const normalized = tempPath.startsWith('file://')
+      ? tempPath.replace('file://', '')
+      : tempPath;
     await RNFS.moveFile(normalized, destPath);
     return Platform.OS === 'android' ? `file://${destPath}` : destPath;
   }
@@ -379,10 +381,14 @@ export default function VideoCaptureScreen({ navigation, route }: any) {
       const camPerm = await Camera.requestCameraPermission();
       const micPerm = await Camera.requestMicrophonePermission();
       if (!camPerm || !micPerm) {
-        Alert.alert('Permissions required', 'Camera and microphone permissions are required.', [
-          { text: 'Open settings', onPress: () => openSettings() },
-          { text: 'Cancel', style: 'cancel' },
-        ]);
+        Alert.alert(
+          'Permissions required',
+          'Camera and microphone permissions are required.',
+          [
+            { text: 'Open settings', onPress: () => openSettings() },
+            { text: 'Cancel', style: 'cancel' },
+          ],
+        );
         return;
       }
 
@@ -427,7 +433,10 @@ export default function VideoCaptureScreen({ navigation, route }: any) {
       Alert.alert('No video', 'Record a video first');
       return;
     }
-    if (route?.params?.onReturn && typeof route.params.onReturn === 'function') {
+    if (
+      route?.params?.onReturn &&
+      typeof route.params.onReturn === 'function'
+    ) {
       route.params.onReturn(previewUri);
       navigation.goBack();
       return;
@@ -446,15 +455,33 @@ export default function VideoCaptureScreen({ navigation, route }: any) {
           {!previewUri ? (
             <>
               {isFocused && (
-                <Camera ref={camera} style={StyleSheet.absoluteFill} device={device} isActive={true} video={true} audio={true} />
+                <Camera
+                  ref={camera}
+                  style={StyleSheet.absoluteFill}
+                  device={device}
+                  isActive={true}
+                  video={true}
+                  audio={true}
+                />
               )}
 
               <View style={styles.controlsRow}>
-                <TouchableOpacity style={[styles.controlBtn, recording && { backgroundColor: 'red' }]} onPress={recording ? stopRecording : startRecording}>
-                  <Text style={styles.controlText}>{recording ? 'Stop' : 'Record'}</Text>
+                <TouchableOpacity
+                  style={[
+                    styles.controlBtn,
+                    recording && { backgroundColor: 'red' },
+                  ]}
+                  onPress={recording ? stopRecording : startRecording}
+                >
+                  <Text style={styles.controlText}>
+                    {recording ? 'Stop' : 'Record'}
+                  </Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.controlBtn} onPress={() => navigation.goBack()}>
+                <TouchableOpacity
+                  style={styles.controlBtn}
+                  onPress={() => navigation.goBack()}
+                >
                   <Text style={styles.controlText}>Cancel</Text>
                 </TouchableOpacity>
               </View>
@@ -462,31 +489,50 @@ export default function VideoCaptureScreen({ navigation, route }: any) {
               {processing && (
                 <View style={styles.processing}>
                   <ActivityIndicator color="#fff" />
-                  <Text style={{ color: '#fff', marginTop: 8 }}>Processing...</Text>
+                  <Text style={{ color: '#fff', marginTop: 8 }}>
+                    Processing...
+                  </Text>
                 </View>
               )}
             </>
           ) : (
             <View style={{ flex: 1, padding: 12 }}>
               <View style={{ height: 320, backgroundColor: '#222' }}>
-                <Video source={{ uri: previewUri }} style={{ width: '100%', height: '100%' }} controls resizeMode="contain" />
+                <Video
+                  source={{ uri: previewUri }}
+                  style={{ width: '100%', height: '100%' }}
+                  controls
+                  resizeMode="contain"
+                />
               </View>
 
               <View style={{ marginTop: 12 }}>
-                <Text style={{ color: '#fff', marginBottom: 8 }}>Preview saved at:</Text>
-                <Text style={{ color: '#ccc' }} numberOfLines={1}>{previewUri}</Text>
+                <Text style={{ color: '#fff', marginBottom: 8 }}>
+                  Preview saved at:
+                </Text>
+                <Text style={{ color: '#ccc' }} numberOfLines={1}>
+                  {previewUri}
+                </Text>
               </View>
 
               <View style={styles.actionsRow}>
-                <TouchableOpacity style={styles.actionBtn} onPress={useThisRecording}>
+                <TouchableOpacity
+                  style={styles.actionBtn}
+                  onPress={useThisRecording}
+                >
                   <Text style={styles.actionText}>Use This</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.actionBtn} onPress={() => {
-                  // discard
-                  RNFS.unlink(previewUri.replace('file://', '')).catch(()=>{});
-                  setPreviewUri(null);
-                }}>
+                <TouchableOpacity
+                  style={styles.actionBtn}
+                  onPress={() => {
+                    // discard
+                    RNFS.unlink(previewUri.replace('file://', '')).catch(
+                      () => {},
+                    );
+                    setPreviewUri(null);
+                  }}
+                >
                   <Text style={styles.actionText}>Discard</Text>
                 </TouchableOpacity>
               </View>
@@ -500,11 +546,41 @@ export default function VideoCaptureScreen({ navigation, route }: any) {
 
 const styles = StyleSheet.create({
   center: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-  controlsRow: { position: 'absolute', bottom: 24, left: 0, right: 0, flexDirection: 'row', justifyContent: 'space-around', paddingHorizontal: 20 },
-  controlBtn: { backgroundColor: '#222', paddingHorizontal: 18, paddingVertical: 12, borderRadius: 8, alignItems: 'center' },
+  controlsRow: {
+    position: 'absolute',
+    bottom: 24,
+    left: 0,
+    right: 0,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    paddingHorizontal: 20,
+  },
+  controlBtn: {
+    backgroundColor: '#222',
+    paddingHorizontal: 18,
+    paddingVertical: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
   controlText: { color: '#fff', fontWeight: '600' },
-  processing: { position: 'absolute', top: 20, right: 20, alignItems: 'center' },
-  actionsRow: { flexDirection: 'row', justifyContent: 'space-between', marginTop: 16 },
-  actionBtn: { flex: 1, backgroundColor: '#0a84ff', marginHorizontal: 6, paddingVertical: 12, borderRadius: 8, alignItems: 'center' },
+  processing: {
+    position: 'absolute',
+    top: 20,
+    right: 20,
+    alignItems: 'center',
+  },
+  actionsRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 16,
+  },
+  actionBtn: {
+    flex: 1,
+    backgroundColor: '#0a84ff',
+    marginHorizontal: 6,
+    paddingVertical: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
   actionText: { color: '#fff', fontWeight: '600' },
 });

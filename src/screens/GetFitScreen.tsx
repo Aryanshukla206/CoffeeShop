@@ -253,6 +253,10 @@ export default function GetFitScreen({navigation}: any) {
           title="StepCounter"
           onPress={() => navigation.navigate('StepCaptureScreen')}
         />
+        <Button
+          title="MainScreen"
+          onPress={() => navigation.navigate('MainScreen')}
+        />
       </View>
     </ScrollView>
   );

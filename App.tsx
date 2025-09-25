@@ -14,6 +14,7 @@ import VideoCaptureScreen from './src/screens/VideoCapture';
 import JsStepCaptureScreen from './src/screens/StepScreen';
 import StepCaptureScreen from './src/screens/StepCaptureScreen';
 import DashboardScreen from './src/screens/DashBoardScreen';
+import MainScreen from './src/screens/MainScreen';
 const stack = createNativeStackNavigator();
 const App = () => {
   const WEB_CLIENT_ID =
@@ -72,6 +73,11 @@ const App = () => {
             <stack.Screen
               name="DashBoardScreen"
               component={DashboardScreen}
+              options={{ animation: 'slide_from_bottom' }}
+            />
+            <stack.Screen
+              name="MainScreen"
+              component={MainScreen}
               options={{ animation: 'slide_from_bottom' }}
             />
           </stack.Navigator>

@@ -11,6 +11,9 @@ import AgentScreen from './src/screens/AgentScreen';
 
 import CaptureScreen from './src/screens/CaptureScreen';
 import VideoCaptureScreen from './src/screens/VideoCapture';
+import JsStepCaptureScreen from './src/screens/StepScreen';
+import StepCaptureScreen from './src/screens/StepCaptureScreen';
+import DashboardScreen from './src/screens/DashBoardScreen';
 const stack = createNativeStackNavigator();
 const App = () => {
   const WEB_CLIENT_ID =
@@ -54,6 +57,21 @@ const App = () => {
             <stack.Screen
               name="CaptureVideo"
               component={VideoCaptureScreen}
+              options={{ animation: 'slide_from_bottom' }}
+            />
+            <stack.Screen
+              name="StepScreen"
+              component={JsStepCaptureScreen}
+              options={{ animation: 'slide_from_bottom' }}
+            />
+            <stack.Screen
+              name="StepCaptureScreen"
+              component={StepCaptureScreen}
+              options={{ animation: 'slide_from_bottom' }}
+            />
+            <stack.Screen
+              name="DashBoardScreen"
+              component={DashboardScreen}
               options={{ animation: 'slide_from_bottom' }}
             />
           </stack.Navigator>

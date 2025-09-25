@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-
+   <!-- Activity recognition (if you read from sensors / need step detection) -->
+   <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
   <uses-permission android:name="android.permission.INTERNET" />
   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
   <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -10,7 +11,11 @@
   <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
   <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
   <uses-permission android:name="android.permission.BODY_SENSORS" />
+  <!-- Steps read/write -->
+  <uses-permission android:name="android.permission.health.READ_STEPS" />
+  <uses-permission android:name="android.permission.health.WRITE_STEPS" />
 
+ 
 
 
 
@@ -21,10 +26,19 @@
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity> 
+    <activity android:name=".PermissionsRationaleActivity" android:exported="true">
+      <intent-filter>
+        <action android:name="androidx.health.ACTION_SHOW_PERMISSIONS_RATIONALE" />
+        <category android:name="android.intent.category.HEALTH_PERMISSIONS" />
+      </intent-filter>
+    </activity>
   </application>
 
   <queries>
     <package android:name="com.google.android.apps.healthdata" />
   </queries>
+  <provider android:name="androidx.health.connect.client.impl.HealthConnectClientProvider" android:authorities="${applicationId}.healthconnect" android:exported="false" android:grantUriPermissions="true" />
+
+
 
 </manifest>

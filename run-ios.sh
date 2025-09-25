@@ -27,3 +27,4 @@ fi
 
 # Keep Metro running
 wait $METRO_PID
+

@@ -1,13 +1,14 @@
 package com.coffeeshop
 
+import android.os.Bundle
 import android.content.Intent
 import android.net.Uri
-import android.os.Bundle
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint.fabricEnabled
 import com.facebook.react.defaults.DefaultReactActivityDelegate
 import androidx.health.connect.client.HealthConnectClient
+import dev.matinzd.healthconnect.permissions.HealthConnectPermissionDelegate
 
 class MainActivity : ReactActivity() {
 
@@ -16,6 +17,7 @@ class MainActivity : ReactActivity() {
 
         // Health Connect initialization must be inside a function, like onCreate
         checkHealthConnectAvailability()
+        HealthConnectPermissionDelegate.setPermissionDelegate(this)
     }
 
     private fun checkHealthConnectAvailability() {

@@ -8,13 +8,14 @@ import {
   Alert,
   ScrollView,
   ActivityIndicator,
+  TouchableOpacity,
 } from 'react-native';
 import { request, PERMISSIONS, RESULTS } from 'react-native-permissions';
 import * as GoogleFitService from '../services/GoogleFitService';
 
 
 
-export default function GetFitScreen() {
+export default function GetFitScreen({navigation}: any) {
   const [loading, setLoading] = useState(false);
   const [dailySteps, setDailySteps] = useState<number | string>(0);
   const [heartRate, setHeartRate] = useState<number | string>('Not Found');
@@ -238,6 +239,21 @@ export default function GetFitScreen() {
           <Text style={styles.rightText}>{String(weight)}</Text>
         </View>
       </View>
+
+      <View style={styles.ButtonContainer}>
+        <Button
+          title="Accelerometer"
+          onPress={() => navigation.navigate('StepScreen')}
+        />
+        <Button
+          title="DashBoard"
+          onPress={() => navigation.navigate('DashBoardScreen')}
+        />
+        <Button
+          title="StepCounter"
+          onPress={() => navigation.navigate('StepCaptureScreen')}
+        />
+      </View>
     </ScrollView>
   );
 }
@@ -261,4 +277,10 @@ const styles = StyleSheet.create({
   leftText: { color: '#fff', fontWeight: '600' },
   rightText: { color: '#187FA1', fontWeight: '600' },
   container: { flex: 1, backgroundColor: '#f3f3f3' },
+  ButtonContainer : {
+    flex : 1,
+    gap :5, 
+    flexDirection : 'row', 
+
+  },
 });

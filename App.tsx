@@ -15,6 +15,7 @@ import JsStepCaptureScreen from './src/screens/StepScreen';
 import StepCaptureScreen from './src/screens/StepCaptureScreen';
 import DashboardScreen from './src/screens/DashBoardScreen';
 import MainScreen from './src/screens/MainScreen';
+import VideoPlayerScreen from './src/screens/VideoPlayerScreen';
 const stack = createNativeStackNavigator();
 const App = () => {
   const WEB_CLIENT_ID =
@@ -23,7 +24,7 @@ const App = () => {
     <SafeAreaView style={{ flex: 1 }}>
       <AuthProvider webClientId={WEB_CLIENT_ID}>
         <NavigationContainer>
-          <Notification />
+          {/* <Notification /> */}
           <stack.Navigator screenOptions={{ headerShown: false }}>
             <stack.Screen
               name="Tab"
@@ -78,6 +79,11 @@ const App = () => {
             <stack.Screen
               name="MainScreen"
               component={MainScreen}
+              options={{ animation: 'slide_from_bottom' }}
+            />
+            <stack.Screen
+              name="LiveStream"
+              component={VideoPlayerScreen}
               options={{ animation: 'slide_from_bottom' }}
             />
           </stack.Navigator>

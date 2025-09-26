@@ -48,14 +48,16 @@ const CoffeeCard: React.FC<CoffeeCardProps> = ({
 }) => {
   return (
     <LinearGradient
-      start={{x: 0, y: 0}}
-      end={{x: 1, y: 1}}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 1 }}
       style={styles.CardLinearGradientContainer}
-      colors={[COLORS.primaryGreyHex, COLORS.primaryBlackHex]}>
+      colors={[COLORS.primaryGreyHex, COLORS.primaryBlackHex]}
+    >
       <ImageBackground
         source={imagelink_square}
         style={styles.CardImageBG}
-        resizeMode="cover">
+        resizeMode="cover"
+      >
         <View style={styles.CardRatingContainer}>
           <CustomIcon
             name={'star'}
@@ -81,9 +83,10 @@ const CoffeeCard: React.FC<CoffeeCardProps> = ({
               imagelink_square,
               name,
               special_ingredient,
-              prices: [{...price, quantity: 1}],
+              prices: [{ ...price, quantity: 1 }],
             });
-          }}>
+          }}
+        >
           <BGIcon
             color={COLORS.primaryWhiteHex}
             name={'add'}
@@ -98,7 +101,7 @@ const CoffeeCard: React.FC<CoffeeCardProps> = ({
 
 const styles = StyleSheet.create({
   CardLinearGradientContainer: {
-    padding: SPACING.space_15,
+    padding: SPACING.space_10,
     borderRadius: BORDERRADIUS.radius_25,
   },
   CardImageBG: {

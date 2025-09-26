@@ -6,6 +6,11 @@ buildscript {
         targetSdkVersion = 36
         ndkVersion = "27.1.12297006"
         kotlinVersion = "2.1.20"
+        useExoplayerIMA = false
+        useExoplayerRtsp = false
+        useExoplayerSmoothStreaming = true
+        useExoplayerDash = true
+        useExoplayerHls = true
     }
     repositories {
         google()
@@ -23,6 +28,7 @@ allprojects {
     repositories {
         google()   // ✅ must be here too
         mavenCentral()
+        // maven { url 'https://jitpack.io' } for video Caching
     }
 }
 

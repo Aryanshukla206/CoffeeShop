@@ -10,6 +10,8 @@ import CustomIcon from '../components/CustomIcon';
 import ProfileScreen from '../screens/ProfileScreen';
 import GetFitScreen from '../screens/GetFitScreen';
 import { Icon } from 'react-native-vector-icons/Icon';
+import VideoPlayerScreen from '../screens/VideoPlayerScreen';
+import VideoListScreen from '../screens/VideoListScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -76,6 +78,22 @@ const TabNavigator = () => {
         }}
       ></Tab.Screen>
       <Tab.Screen
+        name="StreamList"
+        component={VideoListScreen}
+        options={{
+          tabBarIcon: ({ focused, color, size }) => (
+            <CustomIcon
+              name="play"
+              size={25}
+              color={
+                focused ? COLORS.primaryOrangeHex : COLORS.primaryLightGreyHex
+              }
+            />
+          ),
+        }}
+      ></Tab.Screen>
+
+      <Tab.Screen
         name="GetFit"
         component={GetFitScreen}
         options={{
@@ -86,7 +104,7 @@ const TabNavigator = () => {
               color={
                 focused ? COLORS.primaryOrangeHex : COLORS.primaryLightGreyHex
               }
-            />    
+            />
           ),
         }}
       ></Tab.Screen>
@@ -96,7 +114,7 @@ const TabNavigator = () => {
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <CustomIcon
-              name="profile"
+              name="user"
               size={25}
               color={
                 focused ? COLORS.primaryOrangeHex : COLORS.primaryLightGreyHex

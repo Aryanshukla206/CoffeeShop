@@ -12,7 +12,8 @@ import {
 } from 'react-native';
 import { request, PERMISSIONS, RESULTS } from 'react-native-permissions';
 import * as GoogleFitService from '../services/GoogleFitService';
-
+import { StatusBar } from 'react-native';
+import { COLORS } from '../theme/theme';
 
 
 export default function GetFitScreen({navigation}: any) {
@@ -170,9 +171,9 @@ export default function GetFitScreen({navigation}: any) {
       style={styles.container}
       contentContainerStyle={{ padding: 12 }}
     >
-      <Button title="Refresh / Authorize" onPress={ensureAndFetch} />
+      <StatusBar backgroundColor={COLORS.primaryBlackHex} />
+      <Button title="Get Data From Google Fit Api" onPress={ensureAndFetch} />
       {loading && <ActivityIndicator style={{ marginTop: 12 }} />}
-
       <View style={styles.row}>
         <View style={styles.left}>
           <Text style={styles.leftText}>Step Count - Today</Text>
@@ -181,7 +182,6 @@ export default function GetFitScreen({navigation}: any) {
           <Text style={styles.rightText}>{String(dailySteps)}</Text>
         </View>
       </View>
-
       <View style={styles.row}>
         <View style={styles.left}>
           <Text style={styles.leftText}>Heart Rate</Text>
@@ -190,7 +190,6 @@ export default function GetFitScreen({navigation}: any) {
           <Text style={styles.rightText}>{String(heartRate)}</Text>
         </View>
       </View>
-
       <View style={styles.row}>
         <View style={styles.left}>
           <Text style={styles.leftText}>BP - Systolic</Text>
@@ -201,7 +200,6 @@ export default function GetFitScreen({navigation}: any) {
           </Text>
         </View>
       </View>
-
       <View style={styles.row}>
         <View style={styles.left}>
           <Text style={styles.leftText}>BP - Diastolic</Text>
@@ -212,7 +210,6 @@ export default function GetFitScreen({navigation}: any) {
           </Text>
         </View>
       </View>
-
       <View style={styles.row}>
         <View style={styles.left}>
           <Text style={styles.leftText}>Calories</Text>
@@ -221,7 +218,6 @@ export default function GetFitScreen({navigation}: any) {
           <Text style={styles.rightText}>{String(calories)}</Text>
         </View>
       </View>
-
       <View style={styles.row}>
         <View style={styles.left}>
           <Text style={styles.leftText}>Sleep - Today (hrs)</Text>
@@ -230,7 +226,6 @@ export default function GetFitScreen({navigation}: any) {
           <Text style={styles.rightText}>{String(sleep)}</Text>
         </View>
       </View>
-
       <View style={styles.row}>
         <View style={styles.left}>
           <Text style={styles.leftText}>Weight (kg)</Text>
@@ -239,22 +234,23 @@ export default function GetFitScreen({navigation}: any) {
           <Text style={styles.rightText}>{String(weight)}</Text>
         </View>
       </View>
-
-      <View style={styles.ButtonContainer}>
+      <View style={styles.MainScreenButton}>
         <Button
           title="Accelerometer"
           onPress={() => navigation.navigate('StepScreen')}
         />
-        <Button
+        {/* <Button
           title="DashBoard"
           onPress={() => navigation.navigate('DashBoardScreen')}
         />
         <Button
           title="StepCounter"
           onPress={() => navigation.navigate('StepCaptureScreen')}
-        />
+        /> */}
+      </View>
+      <View style={styles.MainScreenButton}>
         <Button
-          title="MainScreen"
+          title="Health DashBoard"
           onPress={() => navigation.navigate('MainScreen')}
         />
       </View>
@@ -280,11 +276,17 @@ const styles = StyleSheet.create({
   },
   leftText: { color: '#fff', fontWeight: '600' },
   rightText: { color: '#187FA1', fontWeight: '600' },
-  container: { flex: 1, backgroundColor: '#f3f3f3' },
-  ButtonContainer : {
-    flex : 1,
-    gap :5, 
-    flexDirection : 'row', 
+  container: { flex: 1, backgroundColor: "grey"},
 
+  ButtonContainer: {
+    flex: 1,
+    gap: 10,
+    margin: 10,
+    flexDirection: 'row',
+  },
+  MainScreenButton: {
+    gap: 10,
+    margin: 10,
+    flex: 1,
   },
 });

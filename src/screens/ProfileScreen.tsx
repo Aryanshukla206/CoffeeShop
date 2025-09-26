@@ -15,6 +15,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { COLORS } from '../theme/theme';
 import Share from 'react-native-share';
 import RNFS from 'react-native-fs';
+import Notification from '../pushNotification/notification';
 
 const ProfileScreen = ({ navigation }: any) => {
   const { user, initializing, signInWithGoogle, signOut } = useAuth();
@@ -41,7 +42,7 @@ const ProfileScreen = ({ navigation }: any) => {
       const shareOptions = {
         message: 'Order your next Coffee from this App !! ☕️',
         url: 'file://' + destPath,
-        type: 'image/png', 
+        type: 'image/png',
       };
 
       await Share.open(shareOptions);
@@ -71,6 +72,7 @@ const ProfileScreen = ({ navigation }: any) => {
       <StatusBar backgroundColor={COLORS.primaryBlackHex} />
       {user ? (
         <>
+          <Notification />
           <Image
             source={{ uri: user.photoURL ?? undefined }}
             style={styles.avatar}
@@ -89,11 +91,9 @@ const ProfileScreen = ({ navigation }: any) => {
           >
             <Text style={styles.buttonText}>View Complaints</Text>
           </TouchableOpacity>
-
           <TouchableOpacity style={styles.button} onPress={onShare}>
             <Text style={styles.buttonText}>Share App</Text>
           </TouchableOpacity>
-
           <TouchableOpacity style={styles.button} onPress={onSignOut}>
             <Text style={styles.buttonText}>Logout</Text>
           </TouchableOpacity>

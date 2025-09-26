@@ -171,7 +171,7 @@ export default function AgentScreen() {
       {/* Actions */}
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button} onPress={runAgent}>
-          <Text style={styles.buttonText}>Ask Me !!</Text>
+          <Text style={styles.buttonText}>Suggest Me a Coffee!!</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.button, styles.secondaryButton]}

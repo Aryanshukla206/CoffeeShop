@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet, Image, View} from 'react-native';
-import {COLORS, SPACING} from '../theme/theme';
+import {COLORS, FONTSIZE, SPACING} from '../theme/theme';
+import CustomIcon from './CustomIcon';
 
 
 
@@ -11,15 +12,21 @@ const ProfilePic = (picture : any) => {
 
   return (
     <View > 
+      
       {url ? (
         <Image
           source={{ uri: url }}
           style={styles.Image}
         />
       ) : (
-        <Image
-          source={require('../assets/app_images/aryanDP.jpg')} // fallback
-          style={styles.Image}
+        // <Image
+        //   source={require('../assets/app_images/aryanDP.jpg')} // fallback
+        //   style={styles.Image}
+        // />
+        <CustomIcon
+          name={'user'}
+          color={COLORS.primaryWhiteHex}
+          size={FONTSIZE.size_28}
         />
       )}
       

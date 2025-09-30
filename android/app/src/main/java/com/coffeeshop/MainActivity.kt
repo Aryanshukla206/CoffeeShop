@@ -9,6 +9,10 @@ import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint.fabricEnable
 import com.facebook.react.defaults.DefaultReactActivityDelegate
 import androidx.health.connect.client.HealthConnectClient
 import dev.matinzd.healthconnect.permissions.HealthConnectPermissionDelegate
+import com.google.firebase.installations.FirebaseInstallations
+import android.util.Log;
+import android.widget.Toast;
+
 
 class MainActivity : ReactActivity() {
 
@@ -18,6 +22,17 @@ class MainActivity : ReactActivity() {
         // Health Connect initialization must be inside a function, like onCreate
         checkHealthConnectAvailability()
         HealthConnectPermissionDelegate.setPermissionDelegate(this)
+
+        FirebaseInstallations.getInstance().id.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val fid = task.result
+                Log.d("FirebaseFID", "Installation ID: $fid")
+                // You can also copy it or display it
+                Toast.makeText(this, "FID: " + fid, Toast.LENGTH_LONG).show();
+            } else {
+                Log.e("FirebaseFID", "Unable to get FID", task.exception)
+            }
+        }
     }
 
     private fun checkHealthConnectAvailability() {
@@ -46,4 +61,14 @@ class MainActivity : ReactActivity() {
 
     override fun createReactActivityDelegate(): ReactActivityDelegate =
         DefaultReactActivityDelegate(this, mainComponentName, fabricEnabled)
+
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        intent.data?.let { uri ->
+            Log.d("DeepLink", "onNewIntent data: $uri")
+        } ?: Log.d("DeepLink", "onNewIntent called with no data")
+    }
+
 }

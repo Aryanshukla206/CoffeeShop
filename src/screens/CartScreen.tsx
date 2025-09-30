@@ -52,7 +52,7 @@ const CartScreen = ({navigation, route}: any) => {
         <View
           style={[styles.ScrollViewInnerView, {marginBottom: tabBarHeight}]}>
           <View style={styles.ItemContainer}>
-            <HeaderBar title="Cart" picture={user?.providerData[0].photoURL}/>
+            <HeaderBar title="Cart" picture={user?.providerData[0].photoURL} />
 
             {CartList.length == 0 ? (
               <EmptyListAnimation title={'Cart is Empty'} />

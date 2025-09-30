@@ -28,6 +28,9 @@ import {FlatList} from 'react-native';
 import CoffeeCard from '../components/CoffeeCard';
 import {Dimensions} from 'react-native';
 import { useAuth } from '../contexts/AuthContext';
+import inAppMessaging from '@react-native-firebase/in-app-messaging';
+
+
 
 
 
@@ -62,7 +65,17 @@ const HomeScreen = ({navigation}: any) => {
   const BeanList = useStore((state: any) => state.BeanList);
   const addToCart = useStore((state: any) => state.addToCart);
   const calculateCartPrice = useStore((state: any) => state.calculateCartPrice);
-
+    // const { user} = useAuth();
+  
+  
+  async function bootstrap() {
+    await inAppMessaging().setMessagesDisplaySuppressed(true);
+  }
+  async function onSetup(user) {
+    await setupUser(user);
+    // Allow user to receive messages now setup is complete
+    inAppMessaging().setMessagesDisplaySuppressed(false);
+  }
 
   const [categories, setCategories] = useState(
     getCategoriesFromData(CoffeeList),

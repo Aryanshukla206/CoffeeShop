@@ -16,9 +16,11 @@ import { COLORS } from '../theme/theme';
 import Share from 'react-native-share';
 import RNFS from 'react-native-fs';
 import Notification from '../pushNotification/notification';
+import analytics from '@react-native-firebase/analytics';
 
 const ProfileScreen = ({ navigation }: any) => {
   const { user, initializing, signInWithGoogle, signOut } = useAuth();
+
 
   if (initializing) {
     return (
@@ -54,6 +56,7 @@ const ProfileScreen = ({ navigation }: any) => {
   const onSignIn = async () => {
     try {
       await signInWithGoogle();
+      await analytics().logEvent('User Signed in', { source: 'debug' });
     } catch (err) {
       Alert.alert('Sign-in error', String(err));
     }
@@ -62,6 +65,7 @@ const ProfileScreen = ({ navigation }: any) => {
   const onSignOut = async () => {
     try {
       await signOut();
+      await analytics().logEvent('User Logged Out', { source: 'debug' });
     } catch (err) {
       Alert.alert('Sign-out error', String(err));
     }

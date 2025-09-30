@@ -36,7 +36,7 @@ const FavoritesScreen = ({navigation}: any) => {
         <View
           style={[styles.ScrollViewInnerView, {marginBottom: tabBarHeight}]}>
           <View style={styles.ItemContainer}>
-            <HeaderBar title="Favourites"   picture={user?.providerData[0].photoURL}/>
+            <HeaderBar title="Favourites"   picture={user?.providerData[0].photoURL} />
 
             {FavoritesList.length == 0 ? (
               <EmptyListAnimation title={'No Favourites'} />

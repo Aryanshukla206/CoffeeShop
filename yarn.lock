@@ -2044,7 +2044,14 @@
     text-encoding "^0.7.0"
     web-streams-polyfill "^4.2.0"
 
-"@react-native-firebase/app@^23.3.1":
+"@react-native-firebase/analytics@^23.4.0":
+  version "23.4.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/analytics/-/analytics-23.4.0.tgz#8d7545db1b27fe4b26ffb1dfd6a30d2c9de3d25a"
+  integrity sha512-heLX46ykjw+DNO3hQcJoXFelvnyx5sDEzyMdJjlQRKwOFlcPlnCArIxvgz8tm57RrNe/eohY+h4sKyIJqzoSZQ==
+  dependencies:
+    superstruct "^2.0.2"
+
+"@react-native-firebase/app@^23.4.0":
   version "23.4.0"
   resolved "https://registry.yarnpkg.com/@react-native-firebase/app/-/app-23.4.0.tgz#e245da5d48d13cf5029df78d2bf4f3772857e17e"
   integrity sha512-HaHFrr5D2o5EAKbDOds579Vp8f6QtH3pMeteZuIj/0UaHYD2wdTutNWOsiiJ1tmNJZi7kbfgY0qL/cSgzBGZjw==
@@ -2069,6 +2076,11 @@
   version "23.4.0"
   resolved "https://registry.yarnpkg.com/@react-native-firebase/functions/-/functions-23.4.0.tgz#a9326751dfef7fc327b1d63899dcf55eee61e3fb"
   integrity sha512-plIEsZbUFqV2/Xc0y0yp2yRF99G7NS1kqzPF1bmOUP3ue0PUL4NnydvRupg8Ivoae/cdW31ReSLEE+X83BXTsQ==
+
+"@react-native-firebase/in-app-messaging@^23.4.0":
+  version "23.4.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/in-app-messaging/-/in-app-messaging-23.4.0.tgz#508806fa219777c95d121b87aaaee787de686a20"
+  integrity sha512-7YufQjHoL5fKLZMQ34jC4bfJZhMN+GEeQxi5LDP/1dYSKObpeovVCzgi0owVZgTyeyBRjwIAxZ63y7tHuDv3KA==
 
 "@react-native-firebase/messaging@^23.3.1":
   version "23.4.0"
@@ -7561,6 +7573,11 @@ strnum@^1.1.1:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/strnum/-/strnum-1.1.2.tgz#57bca4fbaa6f271081715dbc9ed7cee5493e28e4"
   integrity sha512-vrN+B7DBIoTTZjnPNewwhx6cBA/H+IS7rfW68n7XxC1y7uoiGQBxaKzqucGUgavX15dJgiGztLJ8vxuEzwqBdA==
+
+superstruct@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/superstruct/-/superstruct-2.0.2.tgz#3f6d32fbdc11c357deff127d591a39b996300c54"
+  integrity sha512-uV+TFRZdXsqXTL2pRvujROjdZQ4RAlBUS5BTh9IGm+jTqQntYThciG/qu57Gs69yjnVUSqdxF9YLmSnpupBW9A==
 
 supports-color@^7.1.0:
   version "7.2.0"

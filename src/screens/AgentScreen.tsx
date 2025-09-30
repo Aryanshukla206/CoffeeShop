@@ -24,6 +24,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { COLORS, FONTFAMILY, FONTSIZE, SPACING } from '../theme/theme';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { fetchWeather } from '../utils/fetchWeather';
+import CustomIcon from '../components/CustomIcon';
 
 // keep your normalizeUser and runAgent helpers as before
 // (not shown here for brevity — just paste your existing ones above)
@@ -44,7 +45,7 @@ export default function AgentScreen() {
     try {
       const app = getApp();
       const ai = getAI(app);
-      const model = getGenerativeModel(ai, { model: 'gemini-1.5-flash' });
+      const model = getGenerativeModel(ai, { model: 'gemini-2.5-flash' });
 
       const userData = {
         displayName: user?.displayName || 'Guest',
@@ -135,11 +136,7 @@ export default function AgentScreen() {
       {agentText ? (
         <View style={styles.card}>
           <View style={styles.cardHeader}>
-            <Icon
-              name="cafe-outline"
-              size={20}
-              color={COLORS.primaryOrangeHex}
-            />
+            <CustomIcon name="bubble" size={20} color={COLORS.primaryOrangeHex} />
             <Text style={styles.cardTitle}>Recommendation</Text>
           </View>
           <Text style={styles.cardText}>{agentText}</Text>
@@ -163,9 +160,7 @@ export default function AgentScreen() {
           )}
         </View>
       ) : (
-        <Text style={styles.hint}>
-          👉 Ask the AI barista.
-        </Text>
+        <Text style={styles.hint}>👉 Ask the AI barista.</Text>
       )}
 
       {/* Actions */}

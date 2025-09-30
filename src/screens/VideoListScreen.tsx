@@ -29,6 +29,12 @@ const SAMPLE_VIDEOS = [
       'https://upload.wikimedia.org/wikipedia/commons/1/1a/Sports_icon.png',
     duration: 0, // live stream
   },
+  {
+    id: '4',
+    title: 'News ',
+    videoUri: 'https://www.youtube.com/live/MhfgvxcVE_8?feature=shared',
+    duration : 0,
+  },
 ];
 
 export default function VideoListScreen({ navigation }: any) {
@@ -38,7 +44,7 @@ export default function VideoListScreen({ navigation }: any) {
     waitForInteraction: false,
   }).current;
 
-  const onViewableItemsChanged = useRef(({ viewableItems }) => {
+  const onViewableItemsChanged = useRef(({ viewableItems } : any) => {
     const newMap = {};
     viewableItems.forEach(v => {
       if (v?.item?.id) newMap[v.item.id] = v.isViewable;

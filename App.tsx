@@ -23,9 +23,9 @@ import VideoPlayerScreen from './src/screens/VideoPlayerScreen';
 
 import inAppMessaging from '@react-native-firebase/in-app-messaging';
 import { NotificationProvider } from './src/contexts/NotificationContext';
-import { navigationRef } from './src/navigators/navigationService';
+// import { navigationRef } from './src/navigators/navigationService';
 
-// const navigationRef = createNavigationContainerRef();
+const navigationRef = createNavigationContainerRef();
 const stack = createNativeStackNavigator();
 
 /**

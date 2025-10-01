@@ -17,8 +17,8 @@ const HeaderBar: React.FC<HeaderBarProps> = ({ title, picture }) => {
   const onPressBell = async () => {
     try {
       // Analytics event
-      await analytics().logEvent('notification_checked', {
-        method: 'bell_press',
+      await analytics().logEvent('notificationsChecked', {
+        method: 'bellPress',
       });
 
       // Check for new notifications (triggers IAM optionally and opens modal)

@@ -49,6 +49,7 @@
     "react-native-share": "^12.2.0",
     "react-native-vector-icons": "^10.3.0",
     "react-native-video": "^6.16.1",
+    "react-native-view-shot": "^4.0.3",
     "react-native-vision-camera": "^4.7.2",
     "zustand": "^5.0.8"
   },

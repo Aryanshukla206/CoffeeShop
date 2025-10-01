@@ -14,6 +14,7 @@ import { request, PERMISSIONS, RESULTS } from 'react-native-permissions';
 import * as GoogleFitService from '../services/GoogleFitService';
 import { StatusBar } from 'react-native';
 import { COLORS } from '../theme/theme';
+import inAppMessaging, { triggerEvent } from '@react-native-firebase/in-app-messaging';
 
 
 export default function GetFitScreen({navigation}: any) {
@@ -31,8 +32,18 @@ export default function GetFitScreen({navigation}: any) {
   useEffect(() => {
     (async () => {
       await ensureAndFetch();
+      triggerInAppEvent("GetFitScreen")
     })();
   }, []);
+
+   function triggerInAppEvent({eventName}:any) {
+    // RNFirebase exposes triggerEvent — this triggers programmatic campaigns
+    try {
+      return inAppMessaging().triggerEvent(eventName);
+    } catch (e) {
+      console.warn('FIAM trigger failed', e);
+    }
+  }
 
   async function ensureActivityPermission() {
     // Android only

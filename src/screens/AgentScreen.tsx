@@ -56,6 +56,7 @@ export default function AgentScreen() {
       const prompt = `You are an AI Barista. Suggest a coffee drink for ${userData.displayName}`;
 
       const result = await model.generateContent(prompt);
+      console.log(result, 'response from agent');
 
       setAgentText(result.response.text());
       try {
@@ -136,7 +137,11 @@ export default function AgentScreen() {
       {agentText ? (
         <View style={styles.card}>
           <View style={styles.cardHeader}>
-            <CustomIcon name="bubble" size={20} color={COLORS.primaryOrangeHex} />
+            <CustomIcon
+              name="bubble"
+              size={20}
+              color={COLORS.primaryOrangeHex}
+            />
             <Text style={styles.cardTitle}>Recommendation</Text>
           </View>
           <Text style={styles.cardText}>{agentText}</Text>

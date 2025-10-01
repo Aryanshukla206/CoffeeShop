@@ -1,145 +1,3 @@
-// import { NavigationContainer } from '@react-navigation/native';
-// import { createNativeStackNavigator } from '@react-navigation/native-stack';
-// import DetailsScreen from './src/screens/DetailsScreen'; // for native stack navigator
-// import TabNavigator from './src/navigators/TabNavigator';
-// import { AuthProvider } from './src/contexts/AuthContext';
-// import Notification from './src/pushNotification/notification';
-// import ComplaintForm from './src/screens/ComplaintScreen';
-// import ComplainsScreen from './src/screens/ComplainsScreen';
-// import { SafeAreaView } from 'react-native-safe-area-context';
-// import AgentScreen from './src/screens/AgentScreen';
-
-// import CaptureScreen from './src/screens/CaptureScreen';
-// import VideoCaptureScreen from './src/screens/VideoCapture';
-// import JsStepCaptureScreen from './src/screens/StepScreen';
-// import StepCaptureScreen from './src/screens/StepCaptureScreen';
-// import DashboardScreen from './src/screens/DashBoardScreen';
-// import MainScreen from './src/screens/MainScreen';
-// import VideoPlayerScreen from './src/screens/VideoPlayerScreen';
-
-// import inAppMessaging from '@react-native-firebase/in-app-messaging';
-// import analytics from '@react-native-firebase/analytics';
-
-// import { useEffect } from 'react';
-
-// const linking = {
-//   prefixes: ['coffeeshop://'], // deep link prefix
-//   config: {
-//     screens: {
-//       Home: 'Home',
-//       DashboardScreen: 'DashboardScreen',
-//     },
-//   },
-// };
-
-// const stack = createNativeStackNavigator();
-// const App = () => {
-//   // useEffect(() => {
-//   //   // suppress very early while loading
-//   //   inAppMessaging().setMessagesDisplaySuppressed(true);
-
-//   //   // after you finish initializing (user ready), allow messages:
-//   //   const enableMessages = async () => {
-//   //     await inAppMessaging().setMessagesDisplaySuppressed(false);
-//   //   };
-//   //   enableMessages();
-//   // }, []);
-
-//   useEffect(() => {
-//     (async () => {
-//       // start suppressed immediately (optional)
-//       await inAppMessaging().setMessagesDisplaySuppressed(true);
-
-//       // small delay to simulate init / splash
-//       setTimeout(async () => {
-//         await inAppMessaging().setMessagesDisplaySuppressed(false);
-//         console.log('IAM allowed');
-//       }, 1000);
-//     })();
-//   }, []);
-//   // const triggerTestEvent = async () => {
-//   //   await analytics().logEvent('health_dashboard_promo');
-//   //   console.log('analytics event logged: health_dashboard_promo');
-//   // };
-
-//   const WEB_CLIENT_ID =
-//     '714711678580-vo721svv1linmadgac59i3c19g8uhgd6.apps.googleusercontent.com';
-//   return (
-//     <SafeAreaView style={{ flex: 1 }}>
-//       <AuthProvider webClientId={WEB_CLIENT_ID}>
-//         <NavigationContainer linking={linking}>
-//           {/* <Notification /> */}
-//           <stack.Navigator screenOptions={{ headerShown: false }}>
-//             <stack.Screen
-//               name="Tab"
-//               component={TabNavigator}
-//               options={{ animation: 'slide_from_bottom' }}
-//             ></stack.Screen>
-//             <stack.Screen
-//               name="Details"
-//               component={DetailsScreen}
-//               options={{ animation: 'slide_from_bottom' }}
-//             ></stack.Screen>
-//             <stack.Screen
-//               name="ComplaintForm"
-//               component={ComplaintForm}
-//               options={{ animation: 'slide_from_bottom' }}
-//             />
-//             <stack.Screen
-//               name="ComplainsScreen"
-//               component={ComplainsScreen}
-//               options={{ animation: 'slide_from_bottom' }}
-//             />
-//             <stack.Screen
-//               name="AgentScreen"
-//               component={AgentScreen}
-//               options={{ animation: 'slide_from_bottom' }}
-//             />
-//             <stack.Screen
-//               name="CaptureScreen"
-//               component={CaptureScreen}
-//               options={{ animation: 'slide_from_bottom' }}
-//             />
-//             <stack.Screen
-//               name="CaptureVideo"
-//               component={VideoCaptureScreen}
-//               options={{ animation: 'slide_from_bottom' }}
-//             />
-//             <stack.Screen
-//               name="StepScreen"
-//               component={JsStepCaptureScreen}
-//               options={{ animation: 'slide_from_bottom' }}
-//             />
-//             <stack.Screen
-//               name="StepCaptureScreen"
-//               component={StepCaptureScreen}
-//               options={{ animation: 'slide_from_bottom' }}
-//             />
-//             <stack.Screen
-//               name="DashBoardScreen"
-//               component={DashboardScreen}
-//               options={{ animation: 'slide_from_bottom' }}
-//             />
-//             <stack.Screen
-//               name="MainScreen"
-//               component={MainScreen}
-//               options={{ animation: 'slide_from_bottom' }}
-//             />
-//             <stack.Screen
-//               name="LiveStream"
-//               component={VideoPlayerScreen}
-//               options={{ animation: 'slide_from_bottom' }}
-//             />
-//           </stack.Navigator>
-//         </NavigationContainer>
-//       </AuthProvider>
-//     </SafeAreaView>
-//   );
-// };
-
-// export default App;
-
-// App.js
 import React, { useEffect, useRef } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Linking, Platform } from 'react-native';
@@ -152,7 +10,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import DetailsScreen from './src/screens/DetailsScreen';
 import TabNavigator from './src/navigators/TabNavigator';
 import { AuthProvider } from './src/contexts/AuthContext';
-import Notification from './src/pushNotification/notification';
 import ComplaintForm from './src/screens/ComplaintScreen';
 import ComplainsScreen from './src/screens/ComplainsScreen';
 import AgentScreen from './src/screens/AgentScreen';
@@ -165,9 +22,10 @@ import MainScreen from './src/screens/MainScreen';
 import VideoPlayerScreen from './src/screens/VideoPlayerScreen';
 
 import inAppMessaging from '@react-native-firebase/in-app-messaging';
-import analytics from '@react-native-firebase/analytics';
+import { NotificationProvider } from './src/contexts/NotificationContext';
+import { navigationRef } from './src/navigators/navigationService';
 
-const navigationRef = createNavigationContainerRef();
+// const navigationRef = createNavigationContainerRef();
 const stack = createNativeStackNavigator();
 
 /**
@@ -175,7 +33,7 @@ const stack = createNativeStackNavigator();
  * Mapping path 'dashboard' -> screen 'DashBoardScreen'
  */
 const linking = {
-  prefixes: ['coffeeshop://'],
+  prefixes: ['coffeeshop://', 'https://coffeehouse.com'],
   config: {
     screens: {
       Tab: 'home', // optional mapping for tab root
@@ -186,7 +44,21 @@ const linking = {
     },
   },
 };
-
+const waitForNavigationAndNavigate = (
+  navigateFn: () => void,
+  timeout = 5000,
+) => {
+  const start = Date.now();
+  const timer = setInterval(() => {
+    if (navigationRef.isReady()) {
+      clearInterval(timer);
+      navigateFn();
+    } else if (Date.now() - start > timeout) {
+      clearInterval(timer);
+      console.warn('[DeepLink] nav not ready within timeout, skipping');
+    }
+  }, 150);
+};
 const App = () => {
   // IAM initialization: keep what you had
   useEffect(() => {
@@ -205,60 +77,60 @@ const App = () => {
 
   // Programmatic deep link handler
   useEffect(() => {
-    let isMounted = true;
-
-    // handle a URL (either initial or incoming)
-    const handleUrl = (url : any) => {
-      console.log(url, 'from inAppMessaging ------------>');
-      if (!url) return;
-      console.log('[DeepLink] received url ->', url);
-
-      // normalize and parse path
+    // Handler that accepts either a string URL or an event with .url
+    const handleUrl = (
+      incoming: string | { url?: string } | null | undefined,
+    ) => {
       try {
-        // remove scheme
-        const withoutScheme = url.replace(/.*?:\/\//g, '');
-        // path part (strip query)
-        const path = withoutScheme.split('?')[0];
+        const urlString =
+          typeof incoming === 'string' ? incoming : incoming?.url;
+        if (!urlString) return;
+
+        console.log('[DeepLink] raw url:', urlString);
+
+        // Parse using URL (polyfilled). Works for both custom schemes and https.
+        const parsed = new URL(urlString);
+
+        // path: remove leading slash(es)
+        const path = (parsed.pathname || '').replace(/^\/+/, ''); // e.g. 'details/123'
         console.log('[DeepLink] path ->', path);
 
-        // simple routing rules — extend as needed
+        // ROUTING LOGIC
         if (path === 'dashboard' || path.startsWith('dashboard/')) {
-          if (navigationRef.isReady()) {
-            navigationRef.navigate('DashBoardScreen');
-          } else {
-            // navigation not ready; schedule it (works on cold start)
-            const unreadyTimer = setInterval(() => {
-              if (navigationRef.isReady()) {
-                clearInterval(unreadyTimer);
-                navigationRef.navigate('DashBoardScreen');
-              }
-            }, 200);
-          }
+          const navigate = () => navigationRef.navigate('DashBoardScreen');
+          if (navigationRef.isReady()) navigate();
+          else waitForNavigationAndNavigate(navigate);
           return;
         }
 
         if (path === 'main' || path.startsWith('main/')) {
-          if (navigationRef.isReady()) {
-            navigationRef.navigate('MainScreen');
-          } else {
-            const unreadyTimer = setInterval(() => {
-              if (navigationRef.isReady()) {
-                clearInterval(unreadyTimer);
-                navigationRef.navigate('MainScreen');
-              }
-            }, 200);
-          }
+          const navigate = () => navigationRef.navigate('MainScreen');
+          if (navigationRef.isReady()) navigate();
+          else waitForNavigationAndNavigate(navigate);
           return;
         }
 
-        // Example: details/:id -> navigate with param
-        // if (path.startsWith('details/')) {
-        //   const id = path.split('/')[1];
-        //   if (navigationRef.isReady()) {
-        //     navigationRef.navigate('Details', { id });
-        //   }
-        //   return;
-        // }
+        if (path.startsWith('details/')) {
+          const id = path.split('/')[1];
+          // safe access to searchParams (URL polyfill gives this)
+          const type = parsed.searchParams?.get('type') ?? 'coffee';
+          const index = parsed.searchParams?.get('index')
+            ? parseInt(parsed.searchParams.get('index')!, 10)
+            : 0;
+
+          console.log('[DeepLink] details ->', { id, type, index });
+
+          const navigate = () =>
+            navigationRef.navigate('Details', {
+              id,
+              type,
+              index,
+            });
+
+          if (navigationRef.isReady()) navigate();
+          else waitForNavigationAndNavigate(navigate);
+          return;
+        }
 
         console.log('[DeepLink] no matching route for path:', path);
       } catch (err) {
@@ -266,131 +138,129 @@ const App = () => {
       }
     };
 
-    // read initial url (cold start)
+    // Cold start: getInitialURL
     (async () => {
       try {
         const initialUrl = await Linking.getInitialURL();
-        console.log('[DeepLink] initialURL:', initialUrl);
-        if (initialUrl) handleUrl(initialUrl);
+        if (initialUrl) {
+          console.log('[DeepLink] initialURL:', initialUrl);
+          handleUrl(initialUrl);
+        }
       } catch (e) {
         console.error('[DeepLink] getInitialURL error', e);
       }
     })();
 
-    // subscribe to incoming urls
-    const subscription =
-      Linking.addEventListener &&
-      Linking.addEventListener('url', event => {
-        const url = event?.url ?? event;
-        console.log('[DeepLink] incoming url event:', url);
-        handleUrl(url);
-      });
+    // Subscribe to incoming links while the app is running.
+    // Newer RN: Linking.addEventListener returns subscription with remove(); older RN used removeEventListener
+    const eventHandler = (event: any) => {
+      // event may be string or { url }
+      const url = event?.url ?? event;
+      console.log('[DeepLink] incoming event:', url);
+      handleUrl(url);
+    };
 
-    // cleanup
+    let subscription: { remove?: () => void } | null = null;
+    try {
+      // Preferred modern API
+      subscription = Linking.addEventListener('url', eventHandler);
+    } catch (e) {
+      // Fallback for older RN: addEventListener returns nothing; use legacy API
+      Linking.addEventListener('url', eventHandler);
+      subscription = null;
+    }
+
     return () => {
-      isMounted = false;
+      // Cleanup
       try {
-        if (subscription && subscription.remove) subscription.remove();
-        else
+        if (subscription && typeof subscription.remove === 'function') {
+          subscription.remove();
+        } else {
+          // legacy
           Linking.removeEventListener &&
-            Linking.removeEventListener('url', handleUrl);
+            Linking.removeEventListener('url', eventHandler);
+        }
       } catch (err) {
-        // ignore
+        // ignore cleanup errors
       }
     };
   }, []);
 
-  useEffect(() => {
-  const logUrl = async () => {
-    const initialUrl = await Linking.getInitialURL();
-    console.log('[DeepLink] initialURL ->', initialUrl);
-  };
-  logUrl();
-
-  const handler = event => {
-    const url = event?.url ?? event;
-    console.log('[DeepLink] incoming url ->', url);
-  };
-
-  const sub = Linking.addEventListener ? Linking.addEventListener('url', handler) : Linking.addEventListener('url', handler);
-  return () => {
-    if (sub && sub.remove) sub.remove();
-    else Linking.removeEventListener && Linking.removeEventListener('url', handler);
-  };
-}, []);
 
   const WEB_CLIENT_ID =
     '714711678580-vo721svv1linmadgac59i3c19g8uhgd6.apps.googleusercontent.com';
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <AuthProvider webClientId={WEB_CLIENT_ID}>
-        <NavigationContainer linking={linking} ref={navigationRef}>
-          {/* <Notification /> */}
-          <stack.Navigator screenOptions={{ headerShown: false }}>
-            <stack.Screen
-              name="Tab"
-              component={TabNavigator}
-              options={{ animation: 'slide_from_bottom' }}
-            />
-            <stack.Screen
-              name="Details"
-              component={DetailsScreen}
-              options={{ animation: 'slide_from_bottom' }}
-            />
-            <stack.Screen
-              name="ComplaintForm"
-              component={ComplaintForm}
-              options={{ animation: 'slide_from_bottom' }}
-            />
-            <stack.Screen
-              name="ComplainsScreen"
-              component={ComplainsScreen}
-              options={{ animation: 'slide_from_bottom' }}
-            />
-            <stack.Screen
-              name="AgentScreen"
-              component={AgentScreen}
-              options={{ animation: 'slide_from_bottom' }}
-            />
-            <stack.Screen
-              name="CaptureScreen"
-              component={CaptureScreen}
-              options={{ animation: 'slide_from_bottom' }}
-            />
-            <stack.Screen
-              name="CaptureVideo"
-              component={VideoCaptureScreen}
-              options={{ animation: 'slide_from_bottom' }}
-            />
-            <stack.Screen
-              name="StepScreen"
-              component={JsStepCaptureScreen}
-              options={{ animation: 'slide_from_bottom' }}
-            />
-            <stack.Screen
-              name="StepCaptureScreen"
-              component={StepCaptureScreen}
-              options={{ animation: 'slide_from_bottom' }}
-            />
-            <stack.Screen
-              name="DashBoardScreen"
-              component={DashboardScreen}
-              options={{ animation: 'slide_from_bottom' }}
-            />
-            <stack.Screen
-              name="MainScreen"
-              component={MainScreen}
-              options={{ animation: 'slide_from_bottom' }}
-            />
-            <stack.Screen
-              name="LiveStream"
-              component={VideoPlayerScreen}
-              options={{ animation: 'slide_from_bottom' }}
-            />
-          </stack.Navigator>
-        </NavigationContainer>
-      </AuthProvider>
+      <NotificationProvider >
+        <AuthProvider webClientId={WEB_CLIENT_ID}>
+          <NavigationContainer linking={linking} ref={navigationRef}>
+            {/* <Notification /> */}
+            <stack.Navigator screenOptions={{ headerShown: false }}>
+              <stack.Screen
+                name="Tab"
+                component={TabNavigator}
+                options={{ animation: 'slide_from_bottom' }}
+              />
+              <stack.Screen
+                name="Details"
+                component={DetailsScreen}
+                options={{ animation: 'slide_from_bottom' }}
+              />
+              <stack.Screen
+                name="ComplaintForm"
+                component={ComplaintForm}
+                options={{ animation: 'slide_from_bottom' }}
+              />
+              <stack.Screen
+                name="ComplainsScreen"
+                component={ComplainsScreen}
+                options={{ animation: 'slide_from_bottom' }}
+              />
+              <stack.Screen
+                name="AgentScreen"
+                component={AgentScreen}
+                options={{ animation: 'slide_from_bottom' }}
+              />
+              <stack.Screen
+                name="CaptureScreen"
+                component={CaptureScreen}
+                options={{ animation: 'slide_from_bottom' }}
+              />
+              <stack.Screen
+                name="CaptureVideo"
+                component={VideoCaptureScreen}
+                options={{ animation: 'slide_from_bottom' }}
+              />
+              <stack.Screen
+                name="StepScreen"
+                component={JsStepCaptureScreen}
+                options={{ animation: 'slide_from_bottom' }}
+              />
+              <stack.Screen
+                name="StepCaptureScreen"
+                component={StepCaptureScreen}
+                options={{ animation: 'slide_from_bottom' }}
+              />
+              <stack.Screen
+                name="DashBoardScreen"
+                component={DashboardScreen}
+                options={{ animation: 'slide_from_bottom' }}
+              />
+              <stack.Screen
+                name="MainScreen"
+                component={MainScreen}
+                options={{ animation: 'slide_from_bottom' }}
+              />
+              <stack.Screen
+                name="LiveStream"
+                component={VideoPlayerScreen}
+                options={{ animation: 'slide_from_bottom' }}
+              />
+            </stack.Navigator>
+          </NavigationContainer>
+        </AuthProvider>
+      </NotificationProvider>
     </SafeAreaView>
   );
 };

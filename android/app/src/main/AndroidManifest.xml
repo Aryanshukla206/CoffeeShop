@@ -47,6 +47,22 @@
          <data android:scheme="coffeeshop" />
          <!-- Optional: restrict to host 'dashboard' -> <data android:scheme="coffeeshop" android:host="dashboard" /> -->
        </intent-filter>
+
+        <!-- App Link for Website -->
+        <intent-filter android:autoVerify="true">
+          <action android:name="android.intent.action.VIEW" />
+          <category android:name="android.intent.category.DEFAULT" />
+          <category android:name="android.intent.category.BROWSABLE" />
+          <data android:scheme="https" android:host="coffeeapp.com" />
+        </intent-filter>
+
+        <intent-filter android:label="coffeeHouse">
+          <action android:name="android.intent.action.VIEW" />
+          <category android:name="android.intent.category.DEFAULT" />
+          <category android:name="android.intent.category.BROWSABLE" />
+          <data android:scheme="coffeeHouse" />
+        </intent-filter>
+
     </activity>
     <!-- <activity android:name=".PermissionsRationaleActivity" android:exported="true">
       <intent-filter>

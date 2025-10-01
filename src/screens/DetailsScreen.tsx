@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   ScrollView,
   StatusBar,
@@ -8,7 +8,7 @@ import {
   TouchableWithoutFeedback,
   TouchableOpacity,
 } from 'react-native';
-import {useStore} from '../store/store';
+import { useStore } from '../store/store';
 import {
   BORDERRADIUS,
   COLORS,
@@ -19,11 +19,13 @@ import {
 import ImageBackgroundInfo from '../components/ImageBackgroundInfo';
 import PaymentFooter from '../components/PaymentFooter';
 
-const DetailsScreen = ({navigation, route}: any) => {
+const DetailsScreen = ({ navigation, route }: any) => {
   const ItemOfIndex = useStore((state: any) =>
     route.params.type == 'Coffee' ? state.CoffeeList : state.BeanList,
   )[route.params.index];
-  
+
+  console.log(route, 'routes from details page ------>');
+
   const addToFavoriteList = useStore((state: any) => state.addToFavoriteList);
   const deleteFromFavoriteList = useStore(
     (state: any) => state.deleteFromFavoriteList,
@@ -60,7 +62,7 @@ const DetailsScreen = ({navigation, route}: any) => {
       imagelink_square,
       special_ingredient,
       type,
-      prices: [{...price, quantity: 1}],
+      prices: [{ ...price, quantity: 1 }],
     });
     calculateCartPrice();
     navigation.navigate('Cart');
@@ -71,7 +73,8 @@ const DetailsScreen = ({navigation, route}: any) => {
       <StatusBar backgroundColor={COLORS.primaryBlackHex} />
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.ScrollViewFlex}>
+        contentContainerStyle={styles.ScrollViewFlex}
+      >
         <ImageBackgroundInfo
           EnableBackHandler={true}
           imagelink_portrait={ItemOfIndex.imagelink_portrait}
@@ -94,7 +97,8 @@ const DetailsScreen = ({navigation, route}: any) => {
             <TouchableWithoutFeedback
               onPress={() => {
                 setFullDesc(prev => !prev);
-              }}>
+              }}
+            >
               <Text style={styles.DescriptionText}>
                 {ItemOfIndex.description}
               </Text>
@@ -103,7 +107,8 @@ const DetailsScreen = ({navigation, route}: any) => {
             <TouchableWithoutFeedback
               onPress={() => {
                 setFullDesc(prev => !prev);
-              }}>
+              }}
+            >
               <Text numberOfLines={3} style={styles.DescriptionText}>
                 {ItemOfIndex.description}
               </Text>
@@ -125,7 +130,8 @@ const DetailsScreen = ({navigation, route}: any) => {
                         ? COLORS.primaryOrangeHex
                         : COLORS.primaryDarkGreyHex,
                   },
-                ]}>
+                ]}
+              >
                 <Text
                   style={[
                     styles.SizeText,
@@ -139,7 +145,8 @@ const DetailsScreen = ({navigation, route}: any) => {
                           ? COLORS.primaryOrangeHex
                           : COLORS.secondaryLightGreyHex,
                     },
-                  ]}>
+                  ]}
+                >
                   {data.size}
                 </Text>
               </TouchableOpacity>

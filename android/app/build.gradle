@@ -148,10 +148,19 @@ dependencies {
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation("com.google.firebase:firebase-inappmessaging-display")
 
-
+    // implementation(“com.google.android.gms:play-services-location:21.1.0”)
 
     // Add the dependencies for any other desired Firebase products
     // https://firebase.google.com/docs/android/setup#available-libraries
+
+
+
+  implementation(project(':react-native-maps')){
+      exclude group: 'com.google.android.gms'
+  }
+  implementation 'com.google.android.gms:play-services-base:18.0.1'
+  implementation 'com.google.android.gms:play-services-location:19.0.1'
+  implementation 'com.google.android.gms:play-services-maps:18.0.2'
 
     if (hermesEnabled.toBoolean()) {
         implementation("com.facebook.react:hermes-android")

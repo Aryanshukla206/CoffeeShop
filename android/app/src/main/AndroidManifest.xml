@@ -33,35 +33,35 @@
 
   <application android:name=".MainApplication" android:label="@string/app_name" android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher_round" android:allowBackup="false" android:theme="@style/AppTheme" android:usesCleartextTraffic="${usesCleartextTraffic}" android:supportsRtl="true" android:requestLegacyExternalStorage="true" android:largeHeap="true" android:hardwareAccelerated="true">
     <activity android:name=".MainActivity" android:label="@string/app_name" android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|uiMode" android:launchMode="singleTask" android:screenOrientation="portrait" android:windowSoftInputMode="adjustResize" android:exported="true">
-       <!-- Launcher entry (keep separate) -->
-       <intent-filter>
-         <action android:name="android.intent.action.MAIN" />
-         <category android:name="android.intent.category.LAUNCHER" />
-       </intent-filter>
+      <!-- Launcher entry (keep separate) -->
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+      </intent-filter>
 
-       <!-- Deep link handler -->
-       <intent-filter android:autoVerify="false">
-         <action android:name="android.intent.action.VIEW" />
-         <category android:name="android.intent.category.DEFAULT" />
-         <category android:name="android.intent.category.BROWSABLE" />
-         <data android:scheme="coffeeshop" />
-         <!-- Optional: restrict to host 'dashboard' -> <data android:scheme="coffeeshop" android:host="dashboard" /> -->
-       </intent-filter>
+      <!-- Deep link handler -->
+      <intent-filter android:autoVerify="false">
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+        <data android:scheme="coffeeshop" />
+        <!-- Optional: restrict to host 'dashboard' -> <data android:scheme="coffeeshop" android:host="dashboard" /> -->
+      </intent-filter>
 
-        <!-- App Link for Website -->
-        <intent-filter android:autoVerify="true">
-          <action android:name="android.intent.action.VIEW" />
-          <category android:name="android.intent.category.DEFAULT" />
-          <category android:name="android.intent.category.BROWSABLE" />
-          <data android:scheme="https" android:host="coffeeapp.com" />
-        </intent-filter>
+      <!-- App Link for Website -->
+      <intent-filter android:autoVerify="true">
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+        <data android:scheme="https" android:host="coffeeapp.com" />
+      </intent-filter>
 
-        <intent-filter android:label="coffeeHouse">
-          <action android:name="android.intent.action.VIEW" />
-          <category android:name="android.intent.category.DEFAULT" />
-          <category android:name="android.intent.category.BROWSABLE" />
-          <data android:scheme="coffeeHouse" />
-        </intent-filter>
+      <intent-filter android:label="coffeeHouse">
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+        <data android:scheme="coffeeHouse" />
+      </intent-filter>
 
     </activity>
     <!-- <activity android:name=".PermissionsRationaleActivity" android:exported="true">
@@ -76,6 +76,9 @@
         <category android:name="android.intent.category.HEALTH_PERMISSIONS" />
       </intent-filter>
     </activity-alias>
+
+
+    <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyCEf5d0gjEB4LE6Ba-xm_CTWKUAd4Ez8mI" />
   </application>
 
   <!-- <queries>

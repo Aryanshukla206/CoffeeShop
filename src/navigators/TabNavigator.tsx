@@ -12,6 +12,7 @@ import GetFitScreen from '../screens/GetFitScreen';
 import { Icon } from 'react-native-vector-icons/Icon';
 import VideoPlayerScreen from '../screens/VideoPlayerScreen';
 import VideoListScreen from '../screens/VideoListScreen';
+import MapsScreen from '../screens/MapsScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -39,6 +40,21 @@ const TabNavigator = () => {
           tabBarIcon: ({ focused, color, size }) => (
             <CustomIcon
               name="home"
+              size={25}
+              color={
+                focused ? COLORS.primaryOrangeHex : COLORS.primaryLightGreyHex
+              }
+            />
+          ),
+        }}
+      ></Tab.Screen>
+      <Tab.Screen
+        name="Location"
+        component={MapsScreen}
+        options={{
+          tabBarIcon: ({ focused, color, size }) => (
+            <CustomIcon
+              name="location"
               size={25}
               color={
                 focused ? COLORS.primaryOrangeHex : COLORS.primaryLightGreyHex

@@ -460,7 +460,7 @@ const MainScreen = ({ navigation }: any) => {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.settingsButton}
-              onPress={() => navigation.goBack()}
+              onPress={() => navigation.pop()}
             >
               <Text style={styles.settingsButtonText}>Back</Text>
             </TouchableOpacity>

@@ -20,6 +20,13 @@
   <uses-permission android:name="android.permission.health.READ_SLEEP" />
   <uses-permission android:name="android.permission.health.READ_TOTAL_CALORIES_BURNED" />
 
+  <!-- for background services -->
+  <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+  <uses-permission android:name="android.permission.WAKE_LOCK" />
+  <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+
+
+
   <!-- Health Connect queries -->
   <queries>
     <package android:name="com.google.android.apps.healthdata" />
@@ -77,7 +84,8 @@
       </intent-filter>
     </activity-alias>
 
-
+    <service android:name="com.asterinet.react.bgactions.RNBackgroundActionsTask" android:foregroundServiceType="dataSync" />
+    <!-- <service android:name="com.voximplant.foregroundservice.VIForegroundService"> </service> -->
     <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyCEf5d0gjEB4LE6Ba-xm_CTWKUAd4Ez8mI" />
   </application>
 

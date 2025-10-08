@@ -85,6 +85,12 @@ const ProfileScreen = ({ navigation }: any) => {
           <Text style={styles.email}>{user.email}</Text>
           <TouchableOpacity
             style={styles.button}
+            onPress={() => navigation.navigate('BackgroundService')}
+          >
+            <Text style={styles.buttonText}>Background Services</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
             onPress={() => navigation.navigate('ComplaintForm')}
           >
             <Text style={styles.buttonText}>Register Complaint</Text>

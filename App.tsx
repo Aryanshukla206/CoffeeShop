@@ -23,6 +23,7 @@ import VideoPlayerScreen from './src/screens/VideoPlayerScreen';
 
 import inAppMessaging from '@react-native-firebase/in-app-messaging';
 import { NotificationProvider } from './src/contexts/NotificationContext';
+import BackgroundServiceScreen from './src/screens/BackgroundServiceScreen';
 // import { navigationRef } from './src/navigators/navigationService';
 
 const navigationRef = createNavigationContainerRef();
@@ -33,13 +34,15 @@ const stack = createNativeStackNavigator();
  * Mapping path 'dashboard' -> screen 'DashBoardScreen'
  */
 const linking = {
-  prefixes: ['coffeeshop://', 'https://coffeehouse.com'],
+  prefixes: ['coffeeHouse://', 'https://coffeehouse.com'],
   config: {
     screens: {
       Tab: 'home', // optional mapping for tab root
       DashBoardScreen: 'dashboard', // coffeeshop://dashboard -> DashBoardScreen
       MainScreen: 'main', // coffeeshop://main -> MainScreen
       Details: 'details/:id', // example with param
+      BackgroundServiceScreen: 'BackgroundService',
+
       // add other mappings if you need them
     },
   },
@@ -90,6 +93,7 @@ const App = () => {
 
         // Parse using URL (polyfilled). Works for both custom schemes and https.
         const parsed = new URL(urlString);
+        console.log(parsed, 'parsed URL');
 
         // path: remove leading slash(es)
         const path = (parsed.pathname || '').replace(/^\/+/, ''); // e.g. 'details/123'
@@ -110,6 +114,14 @@ const App = () => {
           return;
         }
 
+        if (path === 'BackgroundService/' || path.startsWith('BackgroundService/')) {
+          const navigate = () => navigationRef.navigate('BackgroundService');
+          if (navigationRef.isReady()) navigate();
+          else waitForNavigationAndNavigate(navigate);
+          return;
+        }
+
+        
         if (path.startsWith('details/')) {
           const id = path.split('/')[1];
           // safe access to searchParams (URL polyfill gives this)
@@ -186,13 +198,12 @@ const App = () => {
     };
   }, []);
 
-
   const WEB_CLIENT_ID =
     '714711678580-vo721svv1linmadgac59i3c19g8uhgd6.apps.googleusercontent.com';
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <NotificationProvider >
+      <NotificationProvider>
         <AuthProvider webClientId={WEB_CLIENT_ID}>
           <NavigationContainer linking={linking} ref={navigationRef}>
             {/* <Notification /> */}
@@ -255,6 +266,11 @@ const App = () => {
               <stack.Screen
                 name="LiveStream"
                 component={VideoPlayerScreen}
+                options={{ animation: 'slide_from_bottom' }}
+              />
+              <stack.Screen
+                name="BackgroundService"
+                component={BackgroundServiceScreen}
                 options={{ animation: 'slide_from_bottom' }}
               />
             </stack.Navigator>

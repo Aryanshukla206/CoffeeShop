@@ -26,10 +26,11 @@ const options = {
   taskTitle: 'Counter running',
   taskDesc: 'Counting in background',
   taskIcon: {
-    name: 'avatar',
-    type: 'drawable',
+    name: 'ic_launcher',
+    type: 'mipmap',
     package: 'com.coffeeshop',
   },
+  linkingURI: 'coffeeHouse://main',
   color: '#86ec9eff',
   parameters: { delay: 1000 },
 };

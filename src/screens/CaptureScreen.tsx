@@ -224,6 +224,8 @@
 
 // export default CaptureScreen;
 // CaptureScreen.tsx
+
+
 import React, { useRef, useState } from 'react';
 import {
   View,

@@ -1,3 +1,5 @@
+import 'react-native-gesture-handler';
+
 import React, { useEffect, useRef } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Linking, Platform } from 'react-native';
@@ -26,24 +28,23 @@ import { NotificationProvider } from './src/contexts/NotificationContext';
 import BackgroundServiceScreen from './src/screens/BackgroundServiceScreen';
 // import { navigationRef } from './src/navigators/navigationService';
 
+// import { RealmProvider } from '@realm/react';
+// import { UserSchema } from './src/models/User';
+// import { Preference } from './src/models/Preferences';
+// import { CoffeeSchema } from './src/models/Coffee';
+
 const navigationRef = createNavigationContainerRef();
 const stack = createNativeStackNavigator();
 
-/**
- * Keep a linking config to allow RN to handle links automatically
- * Mapping path 'dashboard' -> screen 'DashBoardScreen'
- */
 const linking = {
   prefixes: ['coffeeHouse://', 'https://coffeehouse.com'],
   config: {
     screens: {
-      Tab: 'home', // optional mapping for tab root
+      Tab: 'home',
       DashBoardScreen: 'dashboard', // coffeeshop://dashboard -> DashBoardScreen
       MainScreen: 'main', // coffeeshop://main -> MainScreen
-      Details: 'details/:id', // example with param
+      Details: 'details/:id',
       BackgroundServiceScreen: 'BackgroundService',
-
-      // add other mappings if you need them
     },
   },
 };
@@ -92,57 +93,68 @@ const App = () => {
         console.log('[DeepLink] raw url:', urlString);
 
         // Parse using URL (polyfilled). Works for both custom schemes and https.
-        const parsed = new URL(urlString);
-        console.log(parsed, 'parsed URL');
+        // const parsed = new URL(urlString);
+        // console.log(parsed, 'parsed URL');
 
         // path: remove leading slash(es)
-        const path = (parsed.pathname || '').replace(/^\/+/, ''); // e.g. 'details/123'
-        console.log('[DeepLink] path ->', path);
+
+        const re = /^[a-zA-Z][a-zA-Z0-9+.\-]*:\/\/([^\/\?#]+)(?:\/([^?\#]*))?/;
+        const path = urlString.match(re);
+        console.log(path[1]);
+        console.log(path[2]);
+
+        // const path = (urlString || '').replace(/^\/+/, ''); // e.g. 'details/123'
+        // console.log('[DeepLink] path ->', path);
 
         // ROUTING LOGIC
-        if (path === 'dashboard' || path.startsWith('dashboard/')) {
+        if (path[1] === 'dashboard' || path[1].startsWith('dashboard/')) {
           const navigate = () => navigationRef.navigate('DashBoardScreen');
           if (navigationRef.isReady()) navigate();
           else waitForNavigationAndNavigate(navigate);
           return;
         }
 
-        if (path === 'main' || path.startsWith('main/')) {
+        if (path[1] === 'main' || path[1].startsWith('main/')) {
           const navigate = () => navigationRef.navigate('MainScreen');
           if (navigationRef.isReady()) navigate();
           else waitForNavigationAndNavigate(navigate);
           return;
         }
 
-        if (path === 'BackgroundService/' || path.startsWith('BackgroundService/')) {
-          const navigate = () => navigationRef.navigate('BackgroundService');
-          if (navigationRef.isReady()) navigate();
-          else waitForNavigationAndNavigate(navigate);
-          return;
-        }
-
-        
-        if (path.startsWith('details/')) {
-          const id = path.split('/')[1];
-          // safe access to searchParams (URL polyfill gives this)
-          const type = parsed.searchParams?.get('type') ?? 'coffee';
-          const index = parsed.searchParams?.get('index')
-            ? parseInt(parsed.searchParams.get('index')!, 10)
-            : 0;
-
-          console.log('[DeepLink] details ->', { id, type, index });
-
+        if (
+          path[1] === 'BackgroundService' ||
+          path[1].startsWith('BackgroundService/')
+        ) {
           const navigate = () =>
-            navigationRef.navigate('Details', {
-              id,
-              type,
-              index,
+            navigationRef.navigate('BackgroundServiceScreen', {
+              screen: 'BackgroundServiceScreen',
             });
-
           if (navigationRef.isReady()) navigate();
           else waitForNavigationAndNavigate(navigate);
           return;
         }
+
+        // if (path[1].startsWith('details/')) {
+        //   const id = path[2];
+        //   // safe access to searchParams (URL polyfill gives this)
+        //   const type = parsed.searchParams?.get('type') ?? 'coffee';
+        //   const index = parsed.searchParams?.get('index')
+        //     ? parseInt(parsed.searchParams.get('index')!, 10)
+        //     : 0;
+
+        //   console.log('[DeepLink] details ->', { id, type, index });
+
+        //   const navigate = () =>
+        //     navigationRef.navigate('Details', {
+        //       id,
+        //       type,
+        //       index,
+        //     });
+
+        //   if (navigationRef.isReady()) navigate();
+        //   else waitForNavigationAndNavigate(navigate);
+        //   return;
+        // }
 
         console.log('[DeepLink] no matching route for path:', path);
       } catch (err) {
@@ -205,6 +217,7 @@ const App = () => {
     <SafeAreaView style={{ flex: 1 }}>
       <NotificationProvider>
         <AuthProvider webClientId={WEB_CLIENT_ID}>
+          {/* <RealmProvider deleteRealmIfMigrationNeeded schema={[ UserSchema, CoffeeSchema]} > */}
           <NavigationContainer linking={linking} ref={navigationRef}>
             {/* <Notification /> */}
             <stack.Navigator screenOptions={{ headerShown: false }}>
@@ -275,6 +288,7 @@ const App = () => {
               />
             </stack.Navigator>
           </NavigationContainer>
+          {/* </RealmProvider> */}
         </AuthProvider>
       </NotificationProvider>
     </SafeAreaView>

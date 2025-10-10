@@ -1,4 +1,4 @@
-import 'react-native-gesture-handler';
+
 
 import React, { useEffect, useRef } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -26,18 +26,13 @@ import VideoPlayerScreen from './src/screens/VideoPlayerScreen';
 import inAppMessaging from '@react-native-firebase/in-app-messaging';
 import { NotificationProvider } from './src/contexts/NotificationContext';
 import BackgroundServiceScreen from './src/screens/BackgroundServiceScreen';
-// import { navigationRef } from './src/navigators/navigationService';
-
-// import { RealmProvider } from '@realm/react';
-// import { UserSchema } from './src/models/User';
-// import { Preference } from './src/models/Preferences';
-// import { CoffeeSchema } from './src/models/Coffee';
+import analytics from "@react-native-firebase/analytics"
 
 const navigationRef = createNavigationContainerRef();
 const stack = createNativeStackNavigator();
 
 const linking = {
-  prefixes: ['coffeeHouse://', 'https://coffeehouse.com'],
+  prefixes: ['coffeeHouse://', 'coffeeHouse.com'],
   config: {
     screens: {
       Tab: 'home',
@@ -64,19 +59,37 @@ const waitForNavigationAndNavigate = (
   }, 150);
 };
 const App = () => {
-  // IAM initialization: keep what you had
+
+  // useEffect(() => {
+  //   (async () => {
+  //     try {
+  //       await inAppMessaging().setMessagesDisplaySuppressed(true);
+  //       setTimeout(async () => {
+  //         await inAppMessaging().setMessagesDisplaySuppressed(false);
+  //         console.log('IAM allowed');
+  //       }, 1000);
+  //     } catch (e) {
+  //       console.warn('IAM init err', e);
+  //     }
+  //   })();
+  // }, []);
   useEffect(() => {
-    (async () => {
+    // Initialize Firebase In-App Messaging
+    const initializeFirebase = async () => {
       try {
-        await inAppMessaging().setMessagesDisplaySuppressed(true);
-        setTimeout(async () => {
-          await inAppMessaging().setMessagesDisplaySuppressed(false);
-          console.log('IAM allowed');
-        }, 1000);
-      } catch (e) {
-        console.warn('IAM init err', e);
+        // Enable automatic data collection (CRITICAL for In-App Messaging)
+        await inAppMessaging().setMessagesDisplaySuppressed(false);
+
+        // Set analytics collection enabled
+        await analytics().setAnalyticsCollectionEnabled(true);
+
+        console.log('Firebase In-App Messaging initialized');
+      } catch (error) {
+        console.error('Firebase initialization error:', error);
       }
-    })();
+    };
+
+    initializeFirebase();
   }, []);
 
   // Programmatic deep link handler

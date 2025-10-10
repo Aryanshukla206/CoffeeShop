@@ -13,6 +13,7 @@ import { Icon } from 'react-native-vector-icons/Icon';
 import VideoPlayerScreen from '../screens/VideoPlayerScreen';
 import VideoListScreen from '../screens/VideoListScreen';
 import MapsScreen from '../screens/MapsScreen';
+import DrawerNavigator from './DrawerNavigator';
 
 const Tab = createBottomTabNavigator();
 
@@ -126,7 +127,8 @@ const TabNavigator = () => {
       ></Tab.Screen>
       <Tab.Screen
         name="Profile"
-        component={ProfileScreen}
+        // component={ProfileScreen}
+        component={DrawerNavigator}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <CustomIcon

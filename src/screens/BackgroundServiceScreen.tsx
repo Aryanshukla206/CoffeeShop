@@ -69,7 +69,7 @@ const BackgroundServiceScreen = ({ navigation, route }: any) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
+      {/* <View style={styles.header}>
         <TouchableOpacity
           onPress={() => {
             navigation.pop();
@@ -78,7 +78,7 @@ const BackgroundServiceScreen = ({ navigation, route }: any) => {
           <GradientBGIcon name="left" color="white" size={FONTSIZE.size_20} />
         </TouchableOpacity>
         <Text style={styles.title}>Test Background Service</Text>
-      </View>
+      </View> */}
       <TouchableOpacity
         style={styles.button}
         onPress={() => {

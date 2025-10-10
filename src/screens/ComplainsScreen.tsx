@@ -59,19 +59,6 @@ const ComplainsScreen = ({ navigation }: any) => {
 
   return (
     <View style={styles.ScreenContainer}>
-      <StatusBar backgroundColor={COLORS.primaryBlackHex} />
-      <View style={styles.ImageHeaderBarContainerWithBack}>
-        <TouchableOpacity onPress={() => BackHandler()}>
-          <GradientBGIcon
-            name="left"
-            color={COLORS.primaryWhiteHex}
-            size={FONTSIZE.size_16}
-          />
-        </TouchableOpacity>
-      </View>
-
-      <Text style={styles.Heading}>My Complaints</Text>
-
       {loading ? (
         <View style={styles.loadingWrap}>
           <ActivityIndicator size="large" color={COLORS.primaryWhiteHex} />

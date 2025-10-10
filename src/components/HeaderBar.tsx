@@ -5,7 +5,7 @@ import GradientBGIcon from './GradientBGIcon';
 import ProfilePic from './ProfilePic';
 import analytics from '@react-native-firebase/analytics';
 import { useNotifications } from '../contexts/NotificationContext';
-
+import inAppMessaging from '@react-native-firebase/in-app-messaging';
 interface HeaderBarProps {
   title?: any;
   picture?: string;
@@ -20,6 +20,8 @@ const HeaderBar: React.FC<HeaderBarProps> = ({ title, picture }) => {
       await analytics().logEvent('notificationsChecked', {
         method: 'bellPress',
       });
+      await inAppMessaging().triggerEvent('notificationsChecked');
+      console.log('FIAM triggered for notificationsChecked');
 
       // Check for new notifications (triggers IAM optionally and opens modal)
       await checkForUpdates();

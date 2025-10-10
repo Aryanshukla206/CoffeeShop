@@ -307,8 +307,7 @@ export default function ComplaintScreen({ navigation, route }: any) {
   // --- UI ---
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>Register Complaint</Text>
-
+     
       <TextInput
         style={styles.input}
         placeholder="Enter complaint"

@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   ScrollView,
   StatusBar,
@@ -13,8 +13,8 @@ import {
   Animated,
   Easing,
 } from 'react-native';
-import {useStore} from '../store/store';
-import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
+import { useStore } from '../store/store';
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import {
   BORDERRADIUS,
   COLORS,
@@ -24,18 +24,12 @@ import {
 } from '../theme/theme';
 import HeaderBar from '../components/HeaderBar';
 import CustomIcon from '../components/CustomIcon';
-import {FlatList} from 'react-native';
+import { FlatList } from 'react-native';
 import CoffeeCard from '../components/CoffeeCard';
-import {Dimensions} from 'react-native';
+import { Dimensions } from 'react-native';
 import { useAuth } from '../contexts/AuthContext';
 import inAppMessaging from '@react-native-firebase/in-app-messaging';
-
-
-
-
-
-
-
+import analytics from '@react-native-firebase/analytics';
 
 const getCategoriesFromData = (data: any) => {
   let temp: any = {};
@@ -60,17 +54,35 @@ const getCoffeeList = (category: string, data: any) => {
   }
 };
 
-const HomeScreen = ({navigation}: any) => {
+const HomeScreen = ({ navigation }: any) => {
   const CoffeeList = useStore((state: any) => state.CoffeeList);
   const BeanList = useStore((state: any) => state.BeanList);
   const addToCart = useStore((state: any) => state.addToCart);
   const calculateCartPrice = useStore((state: any) => state.calculateCartPrice);
-    // const { user} = useAuth();
-  
-  
-  async function bootstrap() {
-    await inAppMessaging().setMessagesDisplaySuppressed(true);
+  // const { user} = useAuth();
+
+  // async function bootstrap() {
+  //   await inAppMessaging().setMessagesDisplaySuppressed(true);
+  // }
+
+  async function debugFIAM() {
+    // ensure display allowed and data collection on
+    await inAppMessaging().setMessagesDisplaySuppressed(false);
+    await inAppMessaging().setAutomaticDataCollectionEnabled(true);
+
+    // print install id (use this in Firebase Console → In-App Messaging → Test on device)
+
+    // log analytics event (so DebugView will show it)
+    await analytics().logEvent('notificationsChecked');
+
+    // trigger FIAM
+    inAppMessaging()
+      .triggerEvent('notificationsChecked')
+      .then(() => console.log('triggered FIAM: notificationsChecked'))
+      .catch(err => console.error('FIAM trigger failed', err));
   }
+  debugFIAM();
+
   async function onSetup(user) {
     await setupUser(user);
     // Allow user to receive messages now setup is complete
@@ -89,7 +101,7 @@ const HomeScreen = ({navigation}: any) => {
     getCoffeeList(categoryIndex.category, CoffeeList),
   );
 
-  const ListRef : any = useRef<FlatList>(null);
+  const ListRef: any = useRef<FlatList>(null);
   const tabBarHeight = useBottomTabBarHeight();
 
   const searchCoffee = (search: string) => {
@@ -98,7 +110,7 @@ const HomeScreen = ({navigation}: any) => {
         animated: true,
         offset: 0,
       });
-      setCategoryIndex({index: 0, category: categories[0]});
+      setCategoryIndex({ index: 0, category: categories[0] });
       setSortedCoffee([
         ...CoffeeList.filter((item: any) =>
           item.name.toLowerCase().includes(search.toLowerCase()),
@@ -112,7 +124,7 @@ const HomeScreen = ({navigation}: any) => {
       animated: true,
       offset: 0,
     });
-    setCategoryIndex({index: 0, category: categories[0]});
+    setCategoryIndex({ index: 0, category: categories[0] });
     setSortedCoffee([...CoffeeList]);
     setSearchText('');
   };
@@ -165,12 +177,11 @@ const HomeScreen = ({navigation}: any) => {
     ).start();
   }, [borderAnim]);
 
-
   const borderColorInterpolation = borderAnim.interpolate({
     inputRange: [0, 1],
     outputRange: ['#ff8c00', '#32cd32'], // orange → green glow
   });
-  const {user} = useAuth();
+  const { user } = useAuth();
 
   return (
     <View style={styles.ScreenContainer}>
